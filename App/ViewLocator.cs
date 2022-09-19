@@ -1,4 +1,4 @@
-using App.ViewModels;
+using App.Views.Models;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using System;

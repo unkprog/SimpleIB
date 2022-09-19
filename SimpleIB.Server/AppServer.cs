@@ -1,4 +1,5 @@
-﻿using SimpleIB.Server.LoggerProviders;
+﻿using Microsoft.Extensions.Options;
+using SimpleIB.Server.LoggerProviders;
 
 namespace SimpleIB.Server
 {
@@ -7,6 +8,8 @@ namespace SimpleIB.Server
         public void Run(bool async = false)
         {
             var builder = WebApplication.CreateBuilder();
+            
+            CongigureHost(builder);
             CongigureServices(builder);
 
             var app = builder.Build();
@@ -19,6 +22,17 @@ namespace SimpleIB.Server
                 app.Run();
         }
 
+        internal void CongigureHost(WebApplicationBuilder builder)
+        {
+            ////builder.WebHost.ConfigureKestrel(options => options.Listen(System.Net.IPAddress.Parse("192.168.86.245"), 5003));
+            //builder.WebHost.ConfigureKestrel(serverOptions =>
+            //{
+            //    //serverOptions.ListenAnyIP(15050);
+            //    //serverOptions.ListenAnyIP(27070, listenOptions => listenOptions.UseHttps());
+            //});
+            ////builder.WebHost.UseUrls("http://localhost:15050;https://localhost:28070");
+
+        }
 
         internal void CongigureServices(WebApplicationBuilder builder)
         {
@@ -30,8 +44,18 @@ namespace SimpleIB.Server
 
         internal void Congigure(WebApplication app)
         {
+            //app.Urls.Add("http://*:15050");
+            //app.Urls.Add("https://*:28070");
+
             // Configure the HTTP request pipeline.
             app.UseHttpsRedirection();
+
+
+            var options = new DefaultFilesOptions();
+            options.DefaultFileNames.Clear();
+            options.DefaultFileNames.Add("/ui/index.html");
+            app.UseDefaultFiles(options);
+
             app.UseStaticFiles();
             //app.UseAuthorization();
             app.MapControllers();
@@ -43,9 +67,10 @@ namespace SimpleIB.Server
             lifetime.ApplicationStarted.Register(OnAppStartup);
         }
 
+        public event EventHandler Started;
         internal void OnAppStartup()
         {
-
+            Started?.Invoke(this, EventArgs.Empty);
         }
     }
 }

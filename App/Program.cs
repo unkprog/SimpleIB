@@ -2,6 +2,8 @@ using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.ReactiveUI;
 using System;
+using Xilium.CefGlue.Common;
+using Xilium.CefGlue;
 
 namespace App
 {
@@ -19,6 +21,17 @@ namespace App
             => AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .LogToTrace()
-                .UseReactiveUI();
+                .UseReactiveUI().With(new Win32PlatformOptions
+                {
+                    UseWindowsUIComposition = false
+                })
+                      .AfterSetup(_ => CefRuntimeLoader.Initialize(new CefSettings()
+                      {
+#if WINDOWLESS
+                          WindowlessRenderingEnabled = true
+#else
+                          WindowlessRenderingEnabled = false
+#endif
+                      }));
     }
 }
