@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using SimpleIB.Server.LoggerProviders;
+using System.Net;
 
 namespace SimpleIB.Server
 {
@@ -24,13 +25,13 @@ namespace SimpleIB.Server
 
         internal void CongigureHost(WebApplicationBuilder builder)
         {
-            ////builder.WebHost.ConfigureKestrel(options => options.Listen(System.Net.IPAddress.Parse("192.168.86.245"), 5003));
-            //builder.WebHost.ConfigureKestrel(serverOptions =>
-            //{
-            //    //serverOptions.ListenAnyIP(15050);
-            //    //serverOptions.ListenAnyIP(27070, listenOptions => listenOptions.UseHttps());
-            //});
-            ////builder.WebHost.UseUrls("http://localhost:15050;https://localhost:28070");
+            //builder.WebHost.ConfigureKestrel(options => options.Listen(System.Net.IPAddress.Parse("192.168.86.245"), 5003));
+            builder.WebHost.ConfigureKestrel(serverOptions =>
+            {
+                serverOptions.Listen(IPAddress.Loopback, 15050);
+                serverOptions.Listen(IPAddress.Loopback, 28070, listenOptions => listenOptions.UseHttps());
+            });
+            //builder.WebHost.UseUrls("http://localhost:15050;https://localhost:28070");
 
         }
 
@@ -44,8 +45,8 @@ namespace SimpleIB.Server
 
         internal void Congigure(WebApplication app)
         {
-            //app.Urls.Add("http://*:15050");
-            //app.Urls.Add("https://*:28070");
+            //app.Urls.Add("http://localhost:15050");
+            //app.Urls.Add("https://localhost:28070");
 
             // Configure the HTTP request pipeline.
             app.UseHttpsRedirection();
