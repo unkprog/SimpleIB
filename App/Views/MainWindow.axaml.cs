@@ -1,5 +1,7 @@
+using App.Views.Models;
 using Avalonia.Controls;
 using SimpleIB.Server;
+using SimpleIB.Server.LoggerProviders;
 using Xilium.CefGlue.Avalonia;
 
 namespace App.Views
@@ -9,6 +11,8 @@ namespace App.Views
         public MainWindow()
         {
             InitializeComponent();
+
+            ServerLogger.SetLoggerOutput(new LogViewModel());
             appBrowser = this.FindControl<AvaloniaCefBrowser>("appBrowser");
             appServer = new SimpleIB.Server.AppServer();
             appServer.Started += AppServerStarted;
@@ -19,6 +23,10 @@ namespace App.Views
 
         private void AppServerStarted(object? sender, System.EventArgs e)
         {
+#if DEBUG
+            Window w = new LogWindow();
+            w.Show();
+#endif
             appBrowser.Address = string.Concat("https://localhost:28070/");
         }
 

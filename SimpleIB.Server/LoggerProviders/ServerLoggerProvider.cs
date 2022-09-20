@@ -32,9 +32,12 @@ namespace SimpleIB.Server.LoggerProviders
         }
 
     }
+
     public class ServerLogger: ILogger
     {
-        public static ILoggerOutput? LoggerOutput = null;
+        private static ILoggerOutput? LoggerOutput = null;
+        public static void SetLoggerOutput(ILoggerOutput loggerOutput) => LoggerOutput = loggerOutput;
+
         protected readonly ServerLoggerProvider _serverLoggerProvider;
 
         public ServerLogger([NotNull] ServerLoggerProvider serverLoggerProvider)

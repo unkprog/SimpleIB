@@ -3,18 +3,20 @@
         xmlns:vm="using:App.Views.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:cefglue="using:Xilium.CefGlue.Avalonia"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="App.Views.MainWindow"
-        Icon="/Assets/avalonia-logo.ico"
-        Title="SimpleIB">
-
+        x:Class="App.Views.LogWindow"
+        Title="Log"
+	    Background="Black">
 	<Window.DataContext>
-		<vm:MainWindowViewModel/>
+		<vm:LogWindowViewModel/>
 	</Window.DataContext>
 
-	<cefglue:AvaloniaCefBrowser Name="appBrowser">
 
-	</cefglue:AvaloniaCefBrowser>
-
+	<ItemsControl Items="{Binding Items}">
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<TextBlock Text="{Binding}" FontSize="10" FontFamily="Arial" Foreground="White" TextWrapping="Wrap"/>
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+	</ItemsControl>
 </Window>
