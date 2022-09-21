@@ -1,6 +1,7 @@
 using App.Views.Models;
 using Avalonia.Controls;
 using SimpleIB.Server;
+using SimpleIB.Server.Data;
 using SimpleIB.Server.LoggerProviders;
 using Xilium.CefGlue.Avalonia;
 
@@ -28,6 +29,7 @@ namespace App.Views
             w.Show();
 #endif
             appBrowser.Address = string.Concat("https://localhost:28070/");
+            DatabaseManager.CheckSettingsDB();
         }
 
     }

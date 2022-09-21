@@ -60,6 +60,8 @@ namespace SimpleIB.Server
             app.UseStaticFiles();
             //app.UseAuthorization();
             app.MapControllers();
+
+            
         }
 
         internal void ConfigureEvents(WebApplication app)
