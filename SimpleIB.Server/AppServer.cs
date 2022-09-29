@@ -70,7 +70,8 @@ namespace SimpleIB.Server
             lifetime.ApplicationStarted.Register(OnAppStartup);
         }
 
-        public event EventHandler Started;
+        public event EventHandler? Started;
+
         internal void OnAppStartup()
         {
             Started?.Invoke(this, EventArgs.Empty);
