@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\ui\views\main.html" />
+    <Content Remove="wwwroot\ui\views\welcome.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="TypeScript\ui\index.ts" />
   </ItemGroup>
 
@@ -14,10 +19,12 @@
     <None Include="wwwroot\ui\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="wwwroot\ui\views\" />
+    <None Include="wwwroot\ui\views\main.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="wwwroot\ui\views\welcome.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
