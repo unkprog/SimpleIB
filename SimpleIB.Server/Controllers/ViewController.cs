@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SimpleIB.Server.Controllers.Models;
 
 namespace SimpleIB.Server.Controllers
 {
@@ -19,15 +20,14 @@ namespace SimpleIB.Server.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<WeatherForecast> Get()
+        public ViewResponse Get(ViewRequets view)
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            ViewResponse result = new ViewResponse() { Path = view?.Path };
+           if (view != null)
             {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+
+            }
+            return result;
         }
 
 

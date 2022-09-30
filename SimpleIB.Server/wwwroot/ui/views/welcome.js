@@ -11,4 +11,3 @@ var ui;
         views.WelcomeView = WelcomeView;
     })(views = ui.views || (ui.views = {}));
 })(ui || (ui = {}));
-//# sourceMappingURL=welcome.js.map
