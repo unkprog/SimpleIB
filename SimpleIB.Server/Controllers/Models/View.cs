@@ -7,7 +7,7 @@
     public class ViewResponse : ViewRequets
     {
         public string? Html { get; set; }
-        public string? Js { get; set; }
-        public string? Css { get; set; }
+        public bool Js { get; set; }
+        public bool Css { get; set; }
     }
 }

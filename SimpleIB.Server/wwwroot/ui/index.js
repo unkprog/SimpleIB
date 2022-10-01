@@ -1,3 +1,12 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 export var app;
 (function (app_1) {
     class Application {
@@ -12,13 +21,26 @@ export var app;
                 this._loader.style.display = (show === true ? "display" : "none");
         }
         Welcome() {
-            let html = '';
-            html += '<link href="/ui/ctrl/controls.css" rel="stylesheet" async />';
-            html += '<link href="/ui/views/welcome.css" rel="stylesheet" async />';
-            html += '<include src="/ui/views/welcome.html"></include>';
-            html += '<script src="/ui/views/welcome.js" async></script>';
-            if (this._app)
-                this._app.innerHTML = html;
+            (() => __awaiter(this, void 0, void 0, function* () {
+                const rawResponse = yield fetch('/api/view/open', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ Path: 'welcome' })
+                });
+                const content = yield rawResponse.json();
+                let html = '';
+                html += '<link href="/ui/ctrl/controls.css" rel="stylesheet" />';
+                if (content.css === true)
+                    html += '<link href="/ui/views/welcome.css" rel="stylesheet" />';
+                html += content.html;
+                if (content.js === true)
+                    html += '<script type="module" src="/ui/views/welcome.js"></script>';
+                if (this._app)
+                    this._app.innerHTML = html;
+            }))();
         }
     }
     ;
@@ -31,3 +53,4 @@ export var app;
         }
     });
 })(app || (app = {}));
+//# sourceMappingURL=index.js.map

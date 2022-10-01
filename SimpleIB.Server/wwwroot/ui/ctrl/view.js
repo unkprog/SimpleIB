@@ -21,3 +21,4 @@ export var ui;
         ctrl.View = View;
     })(ctrl = ui.ctrl || (ui.ctrl = {}));
 })(ui || (ui = {}));
+//# sourceMappingURL=view.js.map

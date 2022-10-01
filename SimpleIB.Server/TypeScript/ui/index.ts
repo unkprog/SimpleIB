@@ -21,16 +21,31 @@
 
         Welcome() {
 
-            let html: string = '';
 
-            html += '<link href="/ui/ctrl/controls.css" rel="stylesheet" async />';
-            html += '<link href="/ui/views/welcome.css" rel="stylesheet" async />';
-            html += '<include src="/ui/views/welcome.html"></include>';
-            html += '<script src="/ui/views/welcome.js" async></script>';
+            (async () => {
+                const rawResponse = await fetch('/api/view/open', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ Path: 'welcome' })
+                });
+                const content = await rawResponse.json();
+                let html: string = '';
 
-            if (this._app)
-                this._app.innerHTML = html;
+                html += '<link href="/ui/ctrl/controls.css" rel="stylesheet" />';
+                if (content.css === true)
+                    html += '<link href="/ui/views/welcome.css" rel="stylesheet" />';
 
+                html += content.html;
+                if (content.js === true)
+                html += '<script type="module" src="/ui/views/welcome.js"></script>';
+
+                if (this._app)
+                    this._app.innerHTML = html;
+ 
+            })();
         }
 
     };
