@@ -9,7 +9,7 @@
         _loader: HTMLElement;
 
         Init() {
-            this._app    = document.getElementById("sib-app");
+            this._app = document.getElementById("sib-app");
             this._loader = document.getElementById("sib-app-loader");
         }
 
@@ -19,9 +19,41 @@
                 this._loader.style.display = (show === true ? "display" : "none");
         }
 
+        async OpenView(viewName: string, toElemenet: HTMLElement) {
+            const viewRequest = { Path: viewName };
+            const contentResponse = await fetch('/api/view/open', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(viewRequest)
+            }).catch(this.OpenViewError);
+            const viewResponse = await contentResponse.json();
+            let html: string = '';
+
+            html += '<link href="/ui/ctrl/controls.css" rel="stylesheet" />';
+            if (viewResponse.css === true)
+                html += '<link href="/ui/views/welcome.css" rel="stylesheet" />';
+
+            html += viewResponse.html;
+            if (viewResponse.js === true)
+                html += '<script type="module" src="/ui/views/welcome.js"></script>';
+            if (toElemenet)
+                toElemenet.innerHTML = html;
+            else if (this._app)
+                this._app.innerHTML = html;
+        }
+
+        OpenViewError(err) {
+            console.warn(err);
+            return new Response(JSON.stringify({
+                code: 400,
+                message: 'Stupid network Error'
+            }));
+        }
+    
         Welcome() {
-
-
             (async () => {
                 const rawResponse = await fetch('/api/view/open', {
                     method: 'POST',
