@@ -3,19 +3,20 @@ export var ui;
     var ctrl;
     (function (ctrl) {
         class View {
-            constructor(opt) {
+            constructor() {
                 //super();
-                this._opt = opt;
-                this.InitOptions();
             }
             get Element() {
                 return this._el;
             }
-            InitOptions() {
+            InitOptions(opt) {
+                this._opt = opt;
                 if (!this._opt)
                     return;
                 if (this._opt.id)
                     this._el = document.getElementById(this._opt.id);
+                else
+                    this._el = this._opt.el;
             }
         }
         ctrl.View = View;

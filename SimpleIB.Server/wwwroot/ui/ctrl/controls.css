@@ -30,6 +30,10 @@
     align-items: stretch;
 }
 
+.view {
+    display:none;
+}
+
 .grid {
     justify-items: stretch;
     align-items: stretch;

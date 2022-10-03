@@ -1,16 +1,8 @@
 ﻿export namespace ui.ctrl {
+    export class View implements IView {
 
-    export interface IViewOptions {
-        id: string;
-        url: string;
-    }
-
-    export class View {
-
-        constructor(opt :IViewOptions) {
-            //super();
-            this._opt = opt;
-            this.InitOptions();
+        constructor() {
+           //super();
         }
 
         _el  :HTMLElement;
@@ -20,12 +12,16 @@
             return this._el;
         }
 
-        InitOptions() {
+        InitOptions(opt: IViewOptions) {
+            this._opt = opt;
+
             if (!this._opt)
                 return;
 
             if (this._opt.id)
                 this._el = document.getElementById(this._opt.id);
+            else
+                this._el = this._opt.el;
         }
     }
 

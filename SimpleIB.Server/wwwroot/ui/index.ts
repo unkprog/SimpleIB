@@ -30,6 +30,7 @@
                 body: JSON.stringify(viewRequest)
             }).catch(this.OpenViewError);
             const viewResponse = await contentResponse.json();
+            let curEl: HTMLElement = toElemenet || this._app;
             let html: string = '';
 
             html += '<link href="/ui/ctrl/controls.css" rel="stylesheet" />';
@@ -39,10 +40,11 @@
             html += viewResponse.html;
             if (viewResponse.js === true)
                 html += '<script type="module" src="/ui/views/welcome.js"></script>';
-            if (toElemenet)
-                toElemenet.innerHTML = html;
-            else if (this._app)
-                this._app.innerHTML = html;
+
+            curEl.innerHTML = html;
+            
+            let view: HTMLElement = curEl.querySelector('.view')
+            view.style.display = 'block';
         }
 
         OpenViewError(err) {
