@@ -6,12 +6,10 @@
     "sourceMap": true,
     "declaration": false,
     "target": "es6",
-    "module": "es6",
-    "outDir": "wwwroot/ui"
+    "module": "es6"
 
   },
   "exclude": [
-    "node_modules",
-    "wwwroot"
+    "node_modules"
   ]
 }

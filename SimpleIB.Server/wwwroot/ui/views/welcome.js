@@ -9,6 +9,7 @@ var ui;
             }
         }
         views.WelcomeView = WelcomeView;
+        var v;
     })(views = ui.views || (ui.views = {}));
 })(ui || (ui = {}));
 //# sourceMappingURL=welcome.js.map

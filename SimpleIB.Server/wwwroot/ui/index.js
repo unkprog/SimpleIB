@@ -20,6 +20,38 @@ export var app;
             if (this._loader)
                 this._loader.style.display = (show === true ? "display" : "none");
         }
+        OpenView(viewName, toElemenet) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const viewRequest = { Path: viewName };
+                const contentResponse = yield fetch('/api/view/open', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(viewRequest)
+                }).catch(this.OpenViewError);
+                const viewResponse = yield contentResponse.json();
+                let html = '';
+                html += '<link href="/ui/ctrl/controls.css" rel="stylesheet" />';
+                if (viewResponse.css === true)
+                    html += '<link href="/ui/views/welcome.css" rel="stylesheet" />';
+                html += viewResponse.html;
+                if (viewResponse.js === true)
+                    html += '<script type="module" src="/ui/views/welcome.js"></script>';
+                if (toElemenet)
+                    toElemenet.innerHTML = html;
+                else if (this._app)
+                    this._app.innerHTML = html;
+            });
+        }
+        OpenViewError(err) {
+            console.warn(err);
+            return new Response(JSON.stringify({
+                code: 400,
+                message: 'Stupid network Error'
+            }));
+        }
         Welcome() {
             (() => __awaiter(this, void 0, void 0, function* () {
                 const rawResponse = yield fetch('/api/view/open', {

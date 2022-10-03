@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="TypeScript\ui\index.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="wwwroot\ui\index.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -43,5 +39,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TypeScript\" />
+  </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties tsconfig_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>
