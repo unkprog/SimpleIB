@@ -2,7 +2,7 @@
 {
     public class ViewRequets
     {
-        public string? Path { get; set; }
+        public string? ViewName { get; set; }
     }
     public class ViewResponse : ViewRequets
     {

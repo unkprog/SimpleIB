@@ -35,7 +35,10 @@
     <Content Update="wwwroot\ui\ctrl\controls.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Update="wwwroot\ui\views\welcome.js">
+    <Content Update="wwwroot\ui\views\welcome.html.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\ui\views\welcome.html.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

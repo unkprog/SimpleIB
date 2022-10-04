@@ -13,4 +13,4 @@ var ui;
         appViews.Register("welcome", function () { return new WelcomeView(); });
     })(views = ui.views || (ui.views = {}));
 })(ui || (ui = {}));
-//# sourceMappingURL=welcome.js.map
+//# sourceMappingURL=welcome.html.js.map

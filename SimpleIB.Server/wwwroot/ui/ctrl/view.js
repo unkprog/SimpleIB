@@ -9,7 +9,7 @@ export var ui;
             get Element() {
                 return this._el;
             }
-            InitOptions(opt) {
+            Init(opt) {
                 this._opt = opt;
                 if (!this._opt)
                     return;
@@ -17,6 +17,26 @@ export var ui;
                     this._el = document.getElementById(this._opt.id);
                 else
                     this._el = this._opt.el;
+                if (this.OnInit)
+                    this.OnInit({ self: this });
+            }
+            Show() {
+                if (this._el)
+                    this._el.style.display = 'block';
+                if (this.OnShow)
+                    this.OnShow({ self: this });
+            }
+            Close() {
+                if (this._el)
+                    this._el.style.display = 'none';
+                if (this.OnClose)
+                    this.OnClose({ self: this });
+            }
+            Destroy() {
+                if (this.OnClose)
+                    this.OnClose({ self: this });
+                this._el = undefined;
+                this._opt = undefined;
             }
         }
         ctrl.View = View;

@@ -1,9 +1,12 @@
-﻿interface IViewOptions {
+﻿interface IViewParams {
     id: string;
     el: HTMLElement;
     url: string;
 }
 
 interface IView {
-    InitOptions(opt: IViewOptions)
+    Init(opt: IViewParams)
+    Show();
+    Close();
+    Destroy();
 }

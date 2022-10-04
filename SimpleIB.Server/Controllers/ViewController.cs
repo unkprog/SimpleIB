@@ -25,17 +25,25 @@ namespace SimpleIB.Server.Controllers
         [Route("open")]
         public ViewResponse Open(ViewRequets view)
         {
-            ViewResponse result = new ViewResponse() { Path = view?.Path };
+            ViewResponse result = new ViewResponse() { ViewName = view?.ViewName };
            if (view != null)
             {
                 System.Type t = typeof(ViewController);
-                string path = string.Concat(t.Assembly.Location.Replace(t.Assembly.ManifestModule.Name, string.Empty), @"wwwroot\ui\views\", view.Path);
+                string path = string.Concat(t.Assembly.Location.Replace(t.Assembly.ManifestModule.Name, string.Empty), @"wwwroot\ui\views\", view.ViewName);
                 string file = string.Concat(path, ".html");
                 if (System.IO.File.Exists(file))
                 {
-                    result.Html = ReadFileAsString(file);
-                    result.Js = System.IO.File.Exists(string.Concat(path, ".js"));
-                    result.Css = System.IO.File.Exists(string.Concat(path, ".css"));
+                    result.Js = System.IO.File.Exists(string.Concat(file, ".js"));
+                    result.Css = System.IO.File.Exists(string.Concat(file, ".css"));
+
+                    StringBuilder sb = new StringBuilder();
+                    if (result.Css)
+                        sb.AppendLine("<link href=\"/ui/views/" + result.ViewName + ".html.css\" rel=\"stylesheet\" />");
+                    sb.AppendLine(ReadFileAsString(file));
+                    if (result.Js)
+                        sb.AppendLine("<script type=\"module\" src=\"/ui/views/" + result.ViewName + ".html.js\" async></script>");
+
+                    result.Html = sb.ToString(); ;
                 }
             }
             return result;
