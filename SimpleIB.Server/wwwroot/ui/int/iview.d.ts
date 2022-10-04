@@ -1,7 +1,7 @@
 ﻿interface IViewParams {
-    id: string;
-    el: HTMLElement;
-    url: string;
+    id?: string;
+    el?: HTMLElement;
+    url?: string;
 }
 
 interface IView {

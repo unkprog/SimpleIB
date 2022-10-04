@@ -8,6 +8,13 @@ var ui;
             constructor() {
                 super();
             }
+            Init(opt) {
+                super.Init(opt);
+                Promise.all([
+                    fetch('/api/admin/servers'),
+                    fetch('/api/admin/bases')
+                ]).then(responses => Promise.all(responses.map(response => response.json()))).then(data => console.log(data)).catch(err => console.log(err));
+            }
         }
         views.WelcomeView = WelcomeView;
         appViews.Register("welcome", function () { return new WelcomeView(); });

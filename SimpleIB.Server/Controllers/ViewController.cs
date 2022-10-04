@@ -10,10 +10,13 @@ namespace SimpleIB.Server.Controllers
     public class ViewController : ControllerBase
     {
         private readonly ILogger<ViewController> _logger;
+        private readonly string _pathViews;
 
         public ViewController(ILogger<ViewController> logger)
         {
             _logger = logger;
+            System.Type t = typeof(ViewController);
+            _pathViews = string.Concat(t.Assembly.Location.Replace(t.Assembly.ManifestModule.Name, string.Empty), @"wwwroot\ui\views\");
         }
 
         [HttpPost]
@@ -24,8 +27,7 @@ namespace SimpleIB.Server.Controllers
            if (view != null)
             {
                 System.Type t = typeof(ViewController);
-                string path = string.Concat(t.Assembly.Location.Replace(t.Assembly.ManifestModule.Name, string.Empty), @"wwwroot\ui\views\", view.ViewName);
-                string file = string.Concat(path, ".html");
+                string file = string.Concat(_pathViews, view.ViewName, ".html");
                 if (System.IO.File.Exists(file))
                 {
                     result.Js = System.IO.File.Exists(string.Concat(file, ".js"));
@@ -35,16 +37,16 @@ namespace SimpleIB.Server.Controllers
                     if (result.Css)
                         sb.AppendLine("<link href=\"/ui/views/" + result.ViewName + ".html.css\" rel=\"stylesheet\" />");
                     sb.AppendLine(ReadFileAsString(file));
-                    if (result.Js)
-                        sb.AppendLine("<script type=\"module\" src=\"/ui/views/" + result.ViewName + ".html.js\" async></script>");
+                    //if (result.Js)
+                    //    sb.AppendLine("<script type=\"module\" src=\"/ui/views/" + result.ViewName + ".html.js\" async></script>");
 
-                    result.Html = sb.ToString(); ;
+                    result.Html = sb.ToString();
                 }
             }
             return result;
         }
 
-        public static string ReadFileAsString(string aFileName)
+        public string ReadFileAsString(string aFileName)
         {
             StringBuilder strBuilder = new StringBuilder();
             if (System.IO.File.Exists(aFileName))

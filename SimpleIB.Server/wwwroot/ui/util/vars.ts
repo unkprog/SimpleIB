@@ -2,11 +2,10 @@
 class AppViews {
     _views: any;
     constructor() {
-
+        this._views = {};
     }
 
     Register(view: string, funcConstructor: () => IView) {
-
         if (!this._views[view])
             this._views[view] = funcConstructor;
     }

@@ -7,6 +7,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { appViews } from "./util/vars.js";
 export class Application {
     constructor() {
     }
@@ -53,7 +54,19 @@ export class Application {
                 //    html += '<script type="module" src="/ui/views/welcome.js async"></script>';
                 curEl.innerHTML = viewResponse.html;
                 let view = curEl.querySelector('.view');
-                view.style.display = 'block';
+                //var codes = curEl.getElementsByTagName("script");
+                //for (var i = 0; i < codes.length; i++) {
+                // eval(codes[i].outerHTML);
+                var newScript = document.createElement("script");
+                newScript.src = '/ui/views/' + viewName + '.html.js';
+                newScript.type = 'module';
+                curEl.appendChild(newScript);
+                //}  
+                let curCView = appViews.Find(viewName);
+                if (curCView) {
+                    curCView.Init({ el: view });
+                    curCView.Show();
+                }
             }))();
         });
     }

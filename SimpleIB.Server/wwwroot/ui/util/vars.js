@@ -1,5 +1,6 @@
 class AppViews {
     constructor() {
+        this._views = {};
     }
     Register(view, funcConstructor) {
         if (!this._views[view])
