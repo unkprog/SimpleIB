@@ -9,11 +9,6 @@ namespace SimpleIB.Server.Controllers
     [Route("api/view")]
     public class ViewController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
         private readonly ILogger<ViewController> _logger;
 
         public ViewController(ILogger<ViewController> logger)
