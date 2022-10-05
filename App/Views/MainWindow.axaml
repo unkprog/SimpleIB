@@ -13,8 +13,11 @@
 		<vm:MainWindowViewModel/>
 	</Window.DataContext>
 
-	<cefglue:AvaloniaCefBrowser Name="appBrowser">
+	<Grid RowDefinitions="* auto">
+		<cefglue:AvaloniaCefBrowser Name="appBrowser">
 
-	</cefglue:AvaloniaCefBrowser>
+		</cefglue:AvaloniaCefBrowser>
+		<Button Name="appButtonTools" Grid.Row="1">Tools</Button>
+	</Grid>
 
 </Window>

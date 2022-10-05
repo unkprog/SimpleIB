@@ -41,6 +41,7 @@ export class Application {
         (async () => {
             const viewRequest = { ViewName: viewName };
             const contentResponse = await fetch('/api/view/open', {
+                cache: "no-cache",
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

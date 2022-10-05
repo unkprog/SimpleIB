@@ -39,6 +39,7 @@ export class Application {
             (() => __awaiter(this, void 0, void 0, function* () {
                 const viewRequest = { ViewName: viewName };
                 const contentResponse = yield fetch('/api/view/open', {
+                    cache: "no-cache",
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

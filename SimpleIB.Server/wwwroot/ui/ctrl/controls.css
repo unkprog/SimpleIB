@@ -18,23 +18,19 @@
     --divider-color: #bdbdbd;
 }
 
-.control {
+.control, .view, .grid {
     position: relative;
     width: 100%;
     height: 100%;
 }
 
-.container {
-    display: grid;
-    justify-items: stretch;
-    align-items: stretch;
-}
-
 .view {
-    display:none;
+    overflow: auto;
+    display: none;
 }
 
 .grid {
+    display: grid;
     justify-items: stretch;
     align-items: stretch;
 }

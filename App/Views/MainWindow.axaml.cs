@@ -18,9 +18,18 @@ namespace App.Views
             appServer = new SimpleIB.Server.AppServer();
             appServer.Started += AppServerStarted;
             appServer.Run(true);
+
+            appButtonTools.Click += AppButtonTools_Click;
+           
+        }
+
+        private void AppButtonTools_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            appBrowser.ShowDeveloperTools();
         }
 
         private SimpleIB.Server.AppServer appServer;
+
 
         private void AppServerStarted(object? sender, System.EventArgs e)
         {
