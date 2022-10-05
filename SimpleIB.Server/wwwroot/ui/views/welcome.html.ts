@@ -1,5 +1,4 @@
 ﻿import * as ctrl from "../ctrl/view.js";
-import { appViews } from "../util/vars.js";
 
 namespace ui.views {
 
@@ -11,19 +10,17 @@ namespace ui.views {
         Init(opt: IViewParams) {
             super.Init(opt);
 
-            Promise.all([
-                fetch('/api/admin/servers'),
-                fetch('/api/admin/bases')
-            ]).then(responses =>
-                Promise.all(responses.map(response => response.json()))
-            ).then(data =>
-                console.log(data)
-            ).catch(err =>
-                console.log(err)
-            );
+            (async () => {
+
+                const contentResponse = await fetch('/api/admin/welcome').catch(window.app.OpenViewError);
+                const viewResponse = await contentResponse.json();
+                console.log(viewResponse);
+               
+            })();
         }
     }
 
-    appViews.Register("welcome", function (): IView { return new WelcomeView(); });
+    window.app.RegViews.Register("welcome", function (): IView { return new WelcomeView(); });
+    //appVars.appViews.Register("welcome", function (): IView { return new WelcomeView(); });
     
 }

@@ -1,14 +1,14 @@
+/// <reference path="int/iview.d.ts" />
 import { Application } from "./application.js";
-export var app;
-(function (app_1) {
-    let app;
+export var sib;
+(function (sib) {
     window.addEventListener('load', function (e) {
         if (document.readyState === "complete") {
-            app = new Application();
-            app.Init();
-            app.Welcome();
-            app.Loader(false);
+            window.app = new Application();
+            window.app.Init();
+            window.app.Welcome();
+            window.app.Loader(false);
         }
     });
-})(app || (app = {}));
+})(sib || (sib = {}));
 //# sourceMappingURL=index.js.map

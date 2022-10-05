@@ -21,5 +21,10 @@
 
     }
 
+    public class WelcomeResponse 
+    {
+        public List<ServerResponse>? Servers { get; set; }
+        public List<DatabaseResponse>? Databases { get; set; }
+    }
 
 }

@@ -27,11 +27,21 @@ namespace SimpleIB.Server.Controllers
         }
 
         [HttpGet]
-        [Route("bases")]
-        public List<DatabaseResponse> Bases()
+        [Route("databases")]
+        public List<DatabaseResponse> Databases()
         {
             List<DatabaseResponse> result = new List<DatabaseResponse>();
             result.Add(new DatabaseResponse() { Id = 0, Name = "Добавить базу" });
+            return result;
+        }
+
+        [HttpGet]
+        [Route("welcome")]
+        public WelcomeResponse Welcome()
+        {
+            WelcomeResponse result = new WelcomeResponse();
+            result.Servers = Servers();
+            result.Databases = Databases();
             return result;
         }
     }

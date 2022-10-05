@@ -1,12 +1,14 @@
-﻿import { appViews } from "./util/vars.js";
+﻿import { AppViews } from "./appviews.js";
 
 export class Application {
     constructor() {
-
+        this.RegViews = new AppViews();
     }
 
-    _app: HTMLElement;
-    _loader: HTMLElement;
+    private _app: HTMLElement;
+    private _loader: HTMLElement;
+
+    readonly RegViews: AppViews;
 
     Init() {
         this._app = document.getElementById("sib-app");
@@ -30,7 +32,8 @@ export class Application {
     }
 
     async OpenView(viewName: string, toElemenet: HTMLElement) {
-        let curEl: HTMLElement = toElemenet || this._app;
+        let self = this;
+        let curEl: HTMLElement = toElemenet || self._app;
         if (!curEl) {
             console.error('Не задан #Root элемент!');
             return;
@@ -44,37 +47,29 @@ export class Application {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(viewRequest)
-            }).catch(this.OpenViewError);
+            }).catch(self.OpenViewError);
             const viewResponse = await contentResponse.json();
-
-            //let html: string = '';
-
-            //html += '<link href="/ui/ctrl/controls.css" rel="stylesheet" />';
-            //if (viewResponse.css === true)
-            //    html += '<link href="/ui/views/' + viewName + '.css" rel="stylesheet" />';
-
-            //html += viewResponse.html;
-            //if (viewResponse.js === true)
-            //    html += '<script type="module" src="/ui/views/welcome.js async"></script>';
 
             curEl.innerHTML = viewResponse.html;
 
-            let view: HTMLElement = curEl.querySelector('.view')
-            //var codes = curEl.getElementsByTagName("script");
-            //for (var i = 0; i < codes.length; i++) {
-               // eval(codes[i].outerHTML);
-                var newScript = document.createElement("script");
-            newScript.src = '/ui/views/' + viewName + '.html.js';
-            newScript.type = 'module';
-
-                curEl.appendChild(newScript);
-            //}  
-
-            let curCView = appViews.Find(viewName);
-            if (curCView) {
-                curCView.Init({ el: view });
-                curCView.Show();
+            const showView = function () {
+                let curCView = self.RegViews.Find(viewName);
+                if (curCView) {
+                    let view: HTMLElement = curEl.querySelector('.view')
+                    curCView.Init({ el: view });
+                    curCView.Show();
+                }
             }
+
+            if (viewResponse.js === true) {
+                var newScript = document.createElement("script");
+                newScript.src = '/ui/views/' + viewName + '.html.js';
+                newScript.type = 'module';
+                newScript.addEventListener('load', showView)
+                curEl.appendChild(newScript);
+            }
+            else
+                showView();
         })();
     }
 
@@ -91,3 +86,6 @@ export class Application {
     }
 
 }
+
+
+

@@ -1,15 +1,16 @@
-﻿import { Application } from "./application.js"
+﻿/// <reference path="int/iview.d.ts" />
 
-export namespace app {
+import { Application } from "./application.js"
 
-    let app: Application;
+export namespace sib {
+
 
     window.addEventListener('load', function (e) {
         if (document.readyState === "complete") {
-            app = new Application();
-            app.Init();
-            app.Welcome();
-            app.Loader(false);
+            window.app = new Application();
+            window.app.Init();
+            window.app.Welcome();
+            window.app.Loader(false);
         }
     });
 
