@@ -25,14 +25,11 @@ namespace SimpleIB.Server
 
         internal void CongigureHost(WebApplicationBuilder builder)
         {
-            //builder.WebHost.ConfigureKestrel(options => options.Listen(System.Net.IPAddress.Parse("192.168.86.245"), 5003));
             builder.WebHost.ConfigureKestrel(serverOptions =>
             {
                 serverOptions.Listen(IPAddress.Loopback, 15050);
                 serverOptions.Listen(IPAddress.Loopback, 28070, listenOptions => listenOptions.UseHttps());
             });
-            //builder.WebHost.UseUrls("http://localhost:15050;https://localhost:28070");
-
         }
 
         internal void CongigureServices(WebApplicationBuilder builder)
@@ -45,12 +42,8 @@ namespace SimpleIB.Server
 
         internal void Congigure(WebApplication app)
         {
-            //app.Urls.Add("http://localhost:15050");
-            //app.Urls.Add("https://localhost:28070");
-
             // Configure the HTTP request pipeline.
             app.UseHttpsRedirection();
-
 
             var options = new DefaultFilesOptions();
             options.DefaultFileNames.Clear();
