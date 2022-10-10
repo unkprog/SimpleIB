@@ -18,11 +18,27 @@ var ui;
             }
             Init(opt) {
                 super.Init(opt);
+                let self = this;
                 (() => __awaiter(this, void 0, void 0, function* () {
                     const contentResponse = yield fetch('/api/admin/welcome').catch(window.app.OpenViewError);
                     const viewResponse = yield contentResponse.json();
-                    console.log(viewResponse);
+                    self.DrawWelcome(viewResponse);
                 }))();
+            }
+            DrawWelcome(viewResponse) {
+                let self = this;
+                let listServers = viewResponse.servers;
+                let html = '';
+                for (let i = 0, icount = listServers === null || listServers === void 0 ? void 0 : listServers.length; i < icount; i++) {
+                    html = '<li id="srv-' + listServers[i].id + '">' + listServers[i].name + '</li>';
+                }
+                self._el.querySelector('#listServers').innerHTML = html;
+                let listDatabases = viewResponse.databases;
+                html = '';
+                for (let i = 0, icount = listDatabases === null || listDatabases === void 0 ? void 0 : listDatabases.length; i < icount; i++) {
+                    html = '<li id="db-' + listDatabases[i].id + '">' + listDatabases[i].name + '</li>';
+                }
+                self._el.querySelector('#listDatabases').innerHTML = html;
             }
         }
         views.WelcomeView = WelcomeView;
