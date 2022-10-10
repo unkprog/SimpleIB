@@ -9,4 +9,6 @@ interface IView {
     Show();
     Close();
     Destroy();
+
+    Id: string;
 }

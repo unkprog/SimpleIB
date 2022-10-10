@@ -8,6 +8,10 @@
         _el  :HTMLElement;
         _opt: IViewParams;
 
+        get Id(): string {
+            return this._opt.id;
+        }
+
         get Element(): HTMLElement {
             return this._el;
         }
@@ -20,13 +24,14 @@
         Init(opt: IViewParams) {
             this._opt = opt;
 
-            if (!this._opt)
+            if (!this._opt || (!this._opt.el && !this._opt.id))
                 return;
 
-            if (this._opt.id)
-                this._el = document.getElementById(this._opt.id);
-            else
+            if (this._opt.el)
                 this._el = this._opt.el;
+            else if (this._opt.id)
+                this._el = document.getElementById(this._opt.id);
+               
 
             if (this.OnInit)
                 this.OnInit({ self: this });
@@ -47,6 +52,8 @@
         }
 
         Destroy() {
+
+
             if (this.OnClose)
                 this.OnClose({ self: this });
 
