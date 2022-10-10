@@ -1,19 +1,20 @@
 using System.Text;
+using Microsoft.Extensions.Logging;
 using SimpleIB.Server.Controllers.Api.Models;
 
 namespace SimpleIB.Server.Controllers.Api
 {
-    public static class ViewController
+    public class ViewController
     {
         private static readonly Type   _type = typeof(ViewController);
         private static readonly string _pathViews = string.Concat(_type.Assembly.Location.Replace(_type.Assembly.ManifestModule.Name, string.Empty), @"wwwroot\ui\views\");
-
+       
+        private static ILogger<ViewController>? logger;
         public static void ApiRegister(WebApplication app)
         {
-            app.MapPost("api/view/open", async (ViewRequets view) =>
-            {
-                return Open(view);
-            });
+            logger = app.Services.GetRequiredService<ILogger<ViewController>>();
+
+            app.MapPost("api/view/open", async (ViewRequets view) => Open(view));
         }
 
         private static ViewResponse Open(ViewRequets view)
@@ -21,6 +22,7 @@ namespace SimpleIB.Server.Controllers.Api
             ViewResponse result = new ViewResponse() { ViewName = view?.ViewName };
             if (view != null)
             {
+                logger?.LogInformation($"Open view {result.ViewName}");
                 Type t = typeof(ViewController);
                 string file = string.Concat(_pathViews, view.ViewName, ".html");
                 if (System.IO.File.Exists(file))

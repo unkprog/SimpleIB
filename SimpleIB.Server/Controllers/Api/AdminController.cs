@@ -4,8 +4,11 @@ namespace SimpleIB.Server.Controllers.Api
 {
     public class AdminController
     {
+        private static ILogger<AdminController>? logger;
         public static void ApiRegister(WebApplication app)
         {
+           logger = app.Services.GetRequiredService<ILogger<AdminController>>();
+            
             app.MapGet("api/admin/servers", async () => Servers());
             app.MapGet("api/admin/databases", async () => Databases());
             app.MapGet("api/admin/welcome", async () => Welcome());
