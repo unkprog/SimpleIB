@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
+using SimpleIB.Server.Controllers.Api;
+using SimpleIB.Server.Controllers.Api.Models;
 using SimpleIB.Server.LoggerProviders;
 using System.Net;
 
@@ -16,6 +18,13 @@ namespace SimpleIB.Server
             var app = builder.Build();
             Congigure(app);
             ConfigureEvents(app);
+
+
+            //app.MapPost("api/view/open", (ViewRequets view) =>
+            //{
+            //    Controllers.Api.ViewController viewController = new Controllers.Api.ViewController(null);
+            //    return viewController.Open(view);
+            //});
 
             if (async)
                 app.RunAsync();
@@ -35,7 +44,9 @@ namespace SimpleIB.Server
         internal void CongigureServices(WebApplicationBuilder builder)
         {
             builder.Logging.AddServerLogger(options => { });
-
+    //        using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
+    //.SetMinimumLevel(LogLevel.Trace)
+    //.AddConsole());
             // Add services to the container.
             builder.Services.AddControllers();
         }
@@ -52,7 +63,10 @@ namespace SimpleIB.Server
 
             app.UseStaticFiles();
             //app.UseAuthorization();
-            app.MapControllers();
+            //app.MapControllers();
+
+            AdminController.ApiRegister(app);
+            ViewController.ApiRegister(app);
 
             
         }

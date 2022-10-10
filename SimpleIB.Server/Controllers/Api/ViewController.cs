@@ -1,32 +1,27 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using SimpleIB.Server.Controllers.Models;
 using System.Text;
+using SimpleIB.Server.Controllers.Api.Models;
 
-namespace SimpleIB.Server.Controllers
+namespace SimpleIB.Server.Controllers.Api
 {
-    [ApiController]
-    [Route("api/view")]
-    public class ViewController : ControllerBase
+    public static class ViewController
     {
-        private readonly ILogger<ViewController> _logger;
-        private readonly string _pathViews;
+        private static readonly Type   _type = typeof(ViewController);
+        private static readonly string _pathViews = string.Concat(_type.Assembly.Location.Replace(_type.Assembly.ManifestModule.Name, string.Empty), @"wwwroot\ui\views\");
 
-        public ViewController(ILogger<ViewController> logger)
+        public static void ApiRegister(WebApplication app)
         {
-            _logger = logger;
-            System.Type t = typeof(ViewController);
-            _pathViews = string.Concat(t.Assembly.Location.Replace(t.Assembly.ManifestModule.Name, string.Empty), @"wwwroot\ui\views\");
+            app.MapPost("api/view/open", async (ViewRequets view) =>
+            {
+                return Open(view);
+            });
         }
 
-        [HttpPost]
-        [Route("open")]
-        public ViewResponse Open(ViewRequets view)
+        private static ViewResponse Open(ViewRequets view)
         {
             ViewResponse result = new ViewResponse() { ViewName = view?.ViewName };
-           if (view != null)
+            if (view != null)
             {
-                System.Type t = typeof(ViewController);
+                Type t = typeof(ViewController);
                 string file = string.Concat(_pathViews, view.ViewName, ".html");
                 if (System.IO.File.Exists(file))
                 {
@@ -37,8 +32,6 @@ namespace SimpleIB.Server.Controllers
                     if (result.Css)
                         sb.AppendLine("<link href=\"/ui/views/" + result.ViewName + ".html.css\" rel=\"stylesheet\" />");
                     sb.AppendLine(ReadFileAsString(file));
-                    //if (result.Js)
-                    //    sb.AppendLine("<script type=\"module\" src=\"/ui/views/" + result.ViewName + ".html.js\" async></script>");
 
                     result.Html = sb.ToString();
                 }
@@ -46,7 +39,7 @@ namespace SimpleIB.Server.Controllers
             return result;
         }
 
-        public string ReadFileAsString(string aFileName)
+        private static string ReadFileAsString(string aFileName)
         {
             StringBuilder strBuilder = new StringBuilder();
             if (System.IO.File.Exists(aFileName))
@@ -57,11 +50,15 @@ namespace SimpleIB.Server.Controllers
                 {
                     using (StreamReader streamReader = new StreamReader(fileStream, Encoding.UTF8)) //.Default))
                     {
+#pragma warning disable CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
                         line = streamReader.ReadLine();
+#pragma warning restore CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
                         while (line != null)
                         {
                             strBuilder.AppendLine(line);
+#pragma warning disable CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
                             line = streamReader.ReadLine();
+#pragma warning restore CS8600 // Преобразование литерала, допускающего значение NULL или возможного значения NULL в тип, не допускающий значение NULL.
                         }
                     }
                 }

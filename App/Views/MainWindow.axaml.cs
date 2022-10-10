@@ -20,12 +20,18 @@ namespace App.Views
             appServer.Run(true);
 
             appButtonTools.Click += AppButtonTools_Click;
-           
+            appButtonRefresh.Click += AppButtonRefresh_Click;
+
         }
 
         private void AppButtonTools_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             appBrowser.ShowDeveloperTools();
+        }
+
+        private void AppButtonRefresh_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            appBrowser.Reload(true);
         }
 
         private SimpleIB.Server.AppServer appServer;

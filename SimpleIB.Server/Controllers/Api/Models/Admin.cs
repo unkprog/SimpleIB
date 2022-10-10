@@ -1,4 +1,4 @@
-﻿namespace SimpleIB.Server.Controllers.Models
+﻿namespace SimpleIB.Server.Controllers.Api.Models
 {
     public class IdResponse
     {
