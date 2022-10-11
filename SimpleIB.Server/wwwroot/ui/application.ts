@@ -18,12 +18,18 @@ export class Application {
     }
 
     private addCss() {
-        let css = document.createElement('link');
+        let heads = document.getElementsByTagName('head'), css;
+
+        css = document.createElement('link');
+        css.rel = 'stylesheet';
+        css.href = './ui/ctrl/materialicons.css';
+        heads[heads.length - 1].appendChild(css);
+
+        css = document.createElement('link');
         css.rel = 'stylesheet';
         css.href = './ui/ctrl/controls.css';
-
-        let heads = document.getElementsByTagName('head');
         heads[heads.length - 1].appendChild(css);
+
     }
 
     Loader(show: boolean) {

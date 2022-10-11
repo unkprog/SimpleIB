@@ -56,6 +56,19 @@
         border: 1px solid black;
     }
 
+
+    .button.icon {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        align-items: center;
+        font-size: 17px;
+    }
+
+    .button > .caption {
+        text-align: start;
+        margin-left: 1em;
+    }
+
 :focus-visible {
     outline: none;
 }

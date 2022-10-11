@@ -32,6 +32,7 @@ var ui;
                 for (let i = 0, icount = listServers === null || listServers === void 0 ? void 0 : listServers.length; i < icount; i++) {
                     html = '<li id="srv-' + listServers[i].id + '">' + listServers[i].name + '</li>';
                 }
+                '<button class="btn"><i class="fa fa-home"></i> Home</button>';
                 self._el.querySelector('#listServers').innerHTML = html;
                 let listDatabases = viewResponse.databases;
                 html = '';
@@ -43,7 +44,6 @@ var ui;
         }
         views.WelcomeView = WelcomeView;
         window.app.RegViews.Register("welcome", function () { return new WelcomeView(); });
-        //appVars.appViews.Register("welcome", function (): IView { return new WelcomeView(); });
     })(views = ui.views || (ui.views = {}));
 })(ui || (ui = {}));
 //# sourceMappingURL=welcome.html.js.map

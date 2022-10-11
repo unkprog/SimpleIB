@@ -30,6 +30,8 @@ namespace ui.views {
                 html = '<li id="srv-' + listServers[i].id + '">' + listServers[i].name + '</li>';
             }
 
+            '<button class="btn"><i class="fa fa-home"></i> Home</button>'
+
             self._el.querySelector('#listServers').innerHTML = html;
 
             let listDatabases = viewResponse.databases;
