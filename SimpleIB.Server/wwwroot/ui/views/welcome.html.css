@@ -1,12 +1,20 @@
 ﻿.listitems {
-    margin: 3px;
     width: 300px;
     height: 400px;
+}
+
+.header {
+    font-size: 20px;
     background-color: var(--p100-color);
+    text-align: center;
+    margin-bottom: -1px !important;
+}
+
+.listitems, .header {
     border: 1px solid var(--p400-color);
-    border-radius: 4px;
+    /*border-radius: 3px;*/
     padding: 0.5rem;
-    list-style-type: none;
+    margin: 0 3px;
 }
 
     .listitems > button {
