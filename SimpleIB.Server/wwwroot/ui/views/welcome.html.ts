@@ -27,20 +27,16 @@ namespace ui.views {
 
             let html = '';
             for (let i = 0, icount = listServers?.length; i < icount; i++) {
-                html = '<li id="srv-' + listServers[i].id + '">' + listServers[i].name + '</li>';
+                html += '<button d="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">laptop_windows</i><span class="caption">' + listServers[i].name + '</span></button>';
             }
-
-            '<button class="btn"><i class="fa fa-home"></i> Home</button>'
-
             self._el.querySelector('#listServers').innerHTML = html;
 
             let listDatabases = viewResponse.databases;
 
             html = '';
             for (let i = 0, icount = listDatabases?.length; i < icount; i++) {
-                html = '<li id="db-' + listDatabases[i].id + '">' + listDatabases[i].name + '</li>';
+                html += '<button d="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">storage</i><span class="caption">' + listDatabases[i].name + '</span></button>';
             }
-
             self._el.querySelector('#listDatabases').innerHTML = html;
         }
     }
