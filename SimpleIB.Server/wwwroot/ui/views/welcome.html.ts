@@ -27,7 +27,7 @@ namespace ui.views {
 
             let html = '';
             for (let i = 0, icount = listServers?.length; i < icount; i++) {
-                html += '<button d="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">laptop_windows</i><span class="caption">' + listServers[i].name + '</span></button>';
+                html += '<button id="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">laptop_windows</i><span class="caption">' + listServers[i].name + '</span></button>';
             }
             self._el.querySelector('#listServers').innerHTML = html;
 
@@ -35,9 +35,17 @@ namespace ui.views {
 
             html = '';
             for (let i = 0, icount = listDatabases?.length; i < icount; i++) {
-                html += '<button d="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">storage</i><span class="caption">' + listDatabases[i].name + '</span></button>';
+                html += '<button id="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">storage</i><span class="caption">' + listDatabases[i].name + '</span></button>';
             }
             self._el.querySelector('#listDatabases').innerHTML = html;
+
+            //let el: HTMLElement =
+            self._el.querySelector('#listServers').children[0].addEventListener('click', this.ClickFunc);
+        }
+
+        ClickFunc(e: any) {
+            window.app.OpenViewModal('modals/viewmodal');
+            alert('click!!!');
         }
     }
 

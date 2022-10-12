@@ -1,0 +1,17 @@
+﻿.window-modal {
+    border: 1px solid var(--p900-color);
+    background-color: var(--p000-color);
+}
+
+.header-modal {
+    background-color: var(--p100-color);
+}
+.content-modal {
+    background-color: var(--p100-color);
+}
+
+.button-modal {
+    float: right;
+    width: 130px;
+    margin: 0.2em 0.2em 0.2em 0;
+}

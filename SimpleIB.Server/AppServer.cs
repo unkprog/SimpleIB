@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Options;
+﻿using System.Net;
 using SimpleIB.Server.Controllers.Api;
-using SimpleIB.Server.Controllers.Api.Models;
 using SimpleIB.Server.LoggerProviders;
-using System.Net;
 
 namespace SimpleIB.Server
 {
@@ -18,13 +16,6 @@ namespace SimpleIB.Server
             var app = builder.Build();
             Congigure(app);
             ConfigureEvents(app);
-
-
-            //app.MapPost("api/view/open", (ViewRequets view) =>
-            //{
-            //    Controllers.Api.ViewController viewController = new Controllers.Api.ViewController(null);
-            //    return viewController.Open(view);
-            //});
 
             if (async)
                 app.RunAsync();
@@ -44,9 +35,6 @@ namespace SimpleIB.Server
         internal void CongigureServices(WebApplicationBuilder builder)
         {
             builder.Logging.AddServerLogger(options => { });
-    //        using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
-    //.SetMinimumLevel(LogLevel.Trace)
-    //.AddConsole());
             // Add services to the container.
             builder.Services.AddControllers();
         }
@@ -65,10 +53,10 @@ namespace SimpleIB.Server
             //app.UseAuthorization();
             //app.MapControllers();
 
+            AdminDataController.ApiRegister(app);
             AdminController.ApiRegister(app);
             ViewController.ApiRegister(app);
-
-            
+            DataController.ApiRegister(app);
         }
 
         internal void ConfigureEvents(WebApplication app)
@@ -81,6 +69,7 @@ namespace SimpleIB.Server
 
         internal void OnAppStartup()
         {
+            AdminDataController.Init();
             Started?.Invoke(this, EventArgs.Empty);
         }
     }

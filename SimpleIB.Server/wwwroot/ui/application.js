@@ -32,10 +32,10 @@ export class Application {
         if (this._loader)
             this._loader.style.display = (show === true ? "display" : "none");
     }
-    OpenView(viewName, toElemenet) {
+    OpenView(viewName, toElement) {
         return __awaiter(this, void 0, void 0, function* () {
             let self = this;
-            let curEl = toElemenet || self._app;
+            let curEl = toElement || self._app;
             if (!curEl) {
                 console.error('Не задан #Root элемент!');
                 return;
@@ -71,6 +71,18 @@ export class Application {
                 else
                     showView();
             }))();
+        });
+    }
+    OpenViewModal(viewName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let toElement = document.createElement("div");
+            toElement.style.width = '100%';
+            toElement.style.height = '100%';
+            toElement.style.position = 'absolute';
+            toElement.style.top = '0';
+            toElement.style.backgroundColor = 'rgba(0,0,0,0.5)';
+            this._app.appendChild(toElement);
+            this.OpenView(viewName, toElement);
         });
     }
     OpenViewError(err) {

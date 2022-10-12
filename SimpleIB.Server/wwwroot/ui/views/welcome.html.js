@@ -30,15 +30,21 @@ var ui;
                 let listServers = viewResponse.servers;
                 let html = '';
                 for (let i = 0, icount = listServers === null || listServers === void 0 ? void 0 : listServers.length; i < icount; i++) {
-                    html += '<button d="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">laptop_windows</i><span class="caption">' + listServers[i].name + '</span></button>';
+                    html += '<button id="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">laptop_windows</i><span class="caption">' + listServers[i].name + '</span></button>';
                 }
                 self._el.querySelector('#listServers').innerHTML = html;
                 let listDatabases = viewResponse.databases;
                 html = '';
                 for (let i = 0, icount = listDatabases === null || listDatabases === void 0 ? void 0 : listDatabases.length; i < icount; i++) {
-                    html += '<button d="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">storage</i><span class="caption">' + listDatabases[i].name + '</span></button>';
+                    html += '<button id="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">storage</i><span class="caption">' + listDatabases[i].name + '</span></button>';
                 }
                 self._el.querySelector('#listDatabases').innerHTML = html;
+                //let el: HTMLElement =
+                self._el.querySelector('#listServers').children[0].addEventListener('click', this.ClickFunc);
+            }
+            ClickFunc(e) {
+                window.app.OpenViewModal('modals/viewmodal');
+                alert('click!!!');
             }
         }
         views.WelcomeView = WelcomeView;
