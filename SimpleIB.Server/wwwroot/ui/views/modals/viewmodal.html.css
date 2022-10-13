@@ -1,17 +1,28 @@
-﻿.window-modal {
+﻿:root {
+}
+
+.window-modal {
     border: 1px solid var(--p900-color);
     background-color: var(--p000-color);
 }
 
 .header-modal {
     background-color: var(--p100-color);
+    padding: var(--def-padding);
+    font-weight: bold;
+    font-size: 0.9rem;
 }
+
 .content-modal {
-    background-color: var(--p100-color);
+    padding: var(--def-padding);
+}
+
+.buttons-modal {
+   
 }
 
 .button-modal {
     float: right;
     width: 130px;
-    margin: 0.2em 0.2em 0.2em 0;
+    margin: var(--def-padding) var(--def-padding) var(--def-padding) 0;
 }

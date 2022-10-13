@@ -45,7 +45,7 @@ namespace ui.views {
 
         ClickFunc(e: any) {
             window.app.OpenViewModal('modals/viewmodal');
-            alert('click!!!');
+            //alert('click!!!');
         }
     }
 

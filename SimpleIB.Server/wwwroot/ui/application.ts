@@ -91,6 +91,9 @@ export class Application {
         this.OpenView(viewName, toElement);
     }
 
+    CloseViewModal(view: IView) {
+    }
+
     OpenViewError(err) {
         console.warn(err);
         return new Response(JSON.stringify({

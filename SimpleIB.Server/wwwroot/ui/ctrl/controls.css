@@ -17,6 +17,8 @@
     --light-primary-color: #d7ccc8;
     --accent-color: #ff9800;
     --divider-color: #bdbdbd;
+
+    --def-padding: 0.3rem;
 }
 
 .control, .view, .grid {

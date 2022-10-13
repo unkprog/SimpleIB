@@ -44,7 +44,7 @@ var ui;
             }
             ClickFunc(e) {
                 window.app.OpenViewModal('modals/viewmodal');
-                alert('click!!!');
+                //alert('click!!!');
             }
         }
         views.WelcomeView = WelcomeView;
