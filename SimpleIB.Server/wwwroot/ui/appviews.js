@@ -1,24 +1,25 @@
 export class AppViews {
     constructor() {
         this._constructorviews = {};
+        this._views = {};
+        this._cid = 0;
     }
     Register(view, funcConstructor) {
         if (!this._constructorviews[view])
             this._constructorviews[view] = funcConstructor;
     }
     Find(view) {
-        let result;
-        if (this._constructorviews[view]) {
-            result = this._constructorviews[view]();
-        }
-        return result;
+        return this._constructorviews[view];
     }
-    Set(aView) {
+    Add(aView) {
         this._views[aView.Id] = aView;
-        this._views.push(aView);
     }
-    get Count() {
-        return this._views.length;
+    Del(aView) {
+        delete this._views[aView.Id];
+    }
+    get IncCid() {
+        this._cid++;
+        return this._cid;
     }
 }
 //# sourceMappingURL=appviews.js.map

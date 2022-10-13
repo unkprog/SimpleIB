@@ -42,6 +42,7 @@
                 this._el.style.display = 'block';
             if (this.OnShow)
                 this.OnShow({ self: this });
+            window.app.CloseView(this);
         }
 
         Close() {
@@ -52,10 +53,7 @@
         }
 
         Destroy() {
-
-
-            if (this.OnClose)
-                this.OnClose({ self: this });
+            this.Close();
 
             this._el = undefined;
             this._opt= undefined;

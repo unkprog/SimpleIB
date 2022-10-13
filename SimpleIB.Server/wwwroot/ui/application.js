@@ -32,11 +32,11 @@ export class Application {
         if (this._loader)
             this._loader.style.display = (show === true ? "display" : "none");
     }
-    OpenView(viewName, toElement) {
+    OpenViewAsync(viewName, toElement) {
         return __awaiter(this, void 0, void 0, function* () {
             let self = this;
-            let curEl = toElement || self._app;
-            if (!curEl) {
+            let viewEl = toElement;
+            if (!viewEl) {
                 console.error('Не задан #Root элемент!');
                 return;
             }
@@ -52,38 +52,47 @@ export class Application {
                     body: JSON.stringify(viewRequest)
                 }).catch(self.OpenViewError);
                 const viewResponse = yield contentResponse.json();
-                curEl.innerHTML = viewResponse.html;
-                const showView = function () {
-                    let curCView = self.RegViews.Find(viewName);
-                    if (curCView) {
-                        let view = curEl.querySelector('.view');
-                        curCView.Init({ el: view });
-                        curCView.Show();
+                viewEl.innerHTML = viewResponse.html;
+                const viewInitShow = function () {
+                    let constructorView = self.RegViews.Find(viewName);
+                    if (constructorView) {
+                        let view = constructorView();
+                        viewEl.id = 'view_' + self.RegViews.IncCid;
+                        view.Init({ id: viewEl.id, el: viewEl });
+                        self.RegViews.Add(view);
+                        view.Show();
                     }
                 };
                 if (viewResponse.js === true) {
                     var newScript = document.createElement("script");
                     newScript.src = '/ui/views/' + viewName + '.html.js';
                     newScript.type = 'module';
-                    newScript.addEventListener('load', showView);
-                    curEl.appendChild(newScript);
+                    newScript.addEventListener('load', viewInitShow);
+                    viewEl.appendChild(newScript);
                 }
                 else
-                    showView();
+                    viewInitShow();
             }))();
+        });
+    }
+    CreateViewElement(className) {
+        let result = document.createElement("div");
+        result.className = className;
+        this._app.appendChild(result);
+        return result;
+    }
+    OpenView(viewName) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.OpenViewAsync(viewName, this.CreateViewElement('view'));
         });
     }
     OpenViewModal(viewName) {
         return __awaiter(this, void 0, void 0, function* () {
-            let toElement = document.createElement("div");
-            toElement.style.width = '100%';
-            toElement.style.height = '100%';
-            toElement.style.position = 'absolute';
-            toElement.style.top = '0';
-            toElement.style.backgroundColor = 'rgba(0,0,0,0.5)';
-            this._app.appendChild(toElement);
-            this.OpenView(viewName, toElement);
+            this.OpenViewAsync(viewName, this.CreateViewElement('view-modal'));
         });
+    }
+    CloseView(view) {
+        this.RegViews.Del(view);
     }
     OpenViewError(err) {
         console.warn(err);
@@ -93,7 +102,7 @@ export class Application {
         }));
     }
     Welcome() {
-        this.OpenView('welcome', this._app);
+        this.OpenView('welcome');
     }
 }
 //# sourceMappingURL=application.js.map

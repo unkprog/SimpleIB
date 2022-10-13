@@ -1,9 +1,12 @@
 ﻿export class AppViews {
     private _constructorviews: any;
-    private _views: Array<IView>;
+    private _views: any;
+    private _cid: number;
 
     constructor() {
         this._constructorviews = {};
+        this._views = {};
+        this._cid = 0;
     }
 
     Register(view: string, funcConstructor: () => IView) {
@@ -11,21 +14,21 @@
             this._constructorviews[view] = funcConstructor;
     }
 
-    Find(view: string): IView {
-        let result: IView;
-        if (this._constructorviews[view]) {
-            result = this._constructorviews[view]();
-        }
-        return result;
+    Find(view: string): Function {
+        return this._constructorviews[view];
     }
 
-    Set(aView: IView) {
+    Add(aView: IView) {
         this._views[aView.Id] = aView;
-        this._views.push(aView);
     }
 
-    get Count():number {
-        return this._views.length;
+    Del(aView: IView) {
+        delete this._views[aView.Id];
+    }
+
+    get IncCid(): number {
+        this._cid++;
+        return this._cid;
     }
 
 }

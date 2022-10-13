@@ -28,6 +28,7 @@ export var ui;
                     this._el.style.display = 'block';
                 if (this.OnShow)
                     this.OnShow({ self: this });
+                window.app.CloseView(this);
             }
             Close() {
                 if (this._el)
@@ -36,8 +37,7 @@ export var ui;
                     this.OnClose({ self: this });
             }
             Destroy() {
-                if (this.OnClose)
-                    this.OnClose({ self: this });
+                this.Close();
                 this._el = undefined;
                 this._opt = undefined;
             }

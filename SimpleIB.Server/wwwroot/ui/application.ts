@@ -37,13 +37,15 @@ export class Application {
             this._loader.style.display = (show === true ? "display" : "none");
     }
 
-    async OpenView(viewName: string, toElement: HTMLElement) {
+    private async OpenViewAsync(viewName: string, toElement: HTMLElement) {
         let self = this;
-        let curEl: HTMLElement = toElement || self._app;
-        if (!curEl) {
+        let viewEl: HTMLElement = toElement;
+
+        if (!viewEl) {
             console.error('Не задан #Root элемент!');
             return;
         }
+
         (async () => {
             const viewRequest = { ViewName: viewName };
             const contentResponse = await fetch('/api/view/open', {
@@ -57,14 +59,16 @@ export class Application {
             }).catch(self.OpenViewError);
             const viewResponse = await contentResponse.json();
 
-            curEl.innerHTML = viewResponse.html;
+            viewEl.innerHTML = viewResponse.html;
 
-            const showView = function () {
-                let curCView = self.RegViews.Find(viewName);
-                if (curCView) {
-                    let view: HTMLElement = curEl.querySelector('.view')
-                    curCView.Init({ el: view });
-                    curCView.Show();
+            const viewInitShow = function () {
+                let constructorView = self.RegViews.Find(viewName);
+                if (constructorView) {
+                    let view: IView = constructorView();
+                    viewEl.id = 'view_' + self.RegViews.IncCid;
+                    view.Init({ id: viewEl.id, el: viewEl });
+                    self.RegViews.Add(view);
+                    view.Show();
                 }
             }
 
@@ -72,26 +76,30 @@ export class Application {
                 var newScript = document.createElement("script");
                 newScript.src = '/ui/views/' + viewName + '.html.js';
                 newScript.type = 'module';
-                newScript.addEventListener('load', showView)
-                curEl.appendChild(newScript);
+                newScript.addEventListener('load', viewInitShow);
+                viewEl.appendChild(newScript);
             }
             else
-                showView();
+                viewInitShow();
         })();
     }
 
-    async OpenViewModal(viewName: string) {
-        let toElement: HTMLElement = document.createElement("div");
-        toElement.style.width = '100%';
-        toElement.style.height = '100%';
-        toElement.style.position = 'absolute';
-        toElement.style.top = '0';
-        toElement.style.backgroundColor = 'rgba(0,0,0,0.5)';
-        this._app.appendChild(toElement);
-        this.OpenView(viewName, toElement);
+    private CreateViewElement(className: string): HTMLElement {
+        let result: HTMLElement = document.createElement("div");
+        result.className = className;
+        this._app.appendChild(result);
+        return result;
     }
 
-    CloseViewModal(view: IView) {
+    async OpenView(viewName: string) {
+        this.OpenViewAsync(viewName, this.CreateViewElement('view'));
+    }
+    async OpenViewModal(viewName: string) {
+        this.OpenViewAsync(viewName, this.CreateViewElement('view-modal'));
+    }
+
+    CloseView(view: IView) {
+        this.RegViews.Del(view);
     }
 
     OpenViewError(err) {
@@ -103,7 +111,7 @@ export class Application {
     }
 
     Welcome() {
-        this.OpenView('welcome', this._app);
+        this.OpenView('welcome');
     }
 
 }

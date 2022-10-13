@@ -9,8 +9,14 @@ namespace ui.views.modals {
 
         Init(opt: IViewParams) {
             super.Init(opt);
+
+            let self = this;
+            self._el.querySelector('#window-modal-button-ok').addEventListener('click', self.ClickOk.bind(self));
         }
 
+        ClickOk(e: any) {
+            this.Close();
+        }
     }
 
     window.app.RegViews.Register("modals/viewmodal", function (): IView { return new ViewModal(); });

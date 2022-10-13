@@ -11,6 +11,11 @@ var ui;
                 }
                 Init(opt) {
                     super.Init(opt);
+                    let self = this;
+                    self._el.querySelector('#window-modal-button-ok').addEventListener('click', self.ClickOk.bind(self));
+                }
+                ClickOk(e) {
+                    this.Close();
                 }
             }
             modals.ViewModal = ViewModal;
