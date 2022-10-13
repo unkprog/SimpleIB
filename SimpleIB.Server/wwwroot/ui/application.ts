@@ -100,6 +100,7 @@ export class Application {
 
     CloseView(view: IView) {
         this.RegViews.Del(view);
+        view.Destroy();
     }
 
     OpenViewError(err) {

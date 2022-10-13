@@ -53,8 +53,8 @@
         }
 
         Destroy() {
-            this.Close();
-
+            if (this._el && this._el.style.display == 'block')
+                this.Close();
             this._el = undefined;
             this._opt= undefined;
         }
