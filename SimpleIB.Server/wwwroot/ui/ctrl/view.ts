@@ -1,4 +1,6 @@
-﻿export namespace ui.ctrl {
+﻿import * as b from "../util/binder.js";
+
+export namespace ui.ctrl {
     export class View implements IView {
 
         constructor() {
@@ -32,9 +34,35 @@
             else if (this._opt.id)
                 this._el = document.getElementById(this._opt.id);
                
-
+            this.DoInitEvents();
             if (this.OnInit)
                 this.OnInit({ self: this });
+
+        }
+
+        Destroy() {
+            this.DoDestroyEvents();
+            if (this._el && this._el.style.display == 'block')
+                this.Close();
+            this._el = undefined;
+            this._opt = undefined;
+        }
+
+
+        BindEvent(el: Element, eventName: string, event: Function): any {
+            return b.util.binder.BindEvent(el, eventName, event, this);
+        }
+
+        UnbindEvent(el: Element, eventName: string, event: any): any {
+            return b.util.binder.UnbindEvent(el, eventName, event);
+        }
+
+        DoInitEvents() {
+           
+        }
+
+        DoDestroyEvents() {
+
         }
 
         Show() {
@@ -42,7 +70,6 @@
                 this._el.style.display = 'block';
             if (this.OnShow)
                 this.OnShow({ self: this });
-            window.app.CloseView(this);
         }
 
         Close() {
@@ -50,14 +77,10 @@
                 this._el.style.display = 'none';
             if (this.OnClose)
                 this.OnClose({ self: this });
+            window.app.CloseView(this);
         }
 
-        Destroy() {
-            if (this._el && this._el.style.display == 'block')
-                this.Close();
-            this._el = undefined;
-            this._opt= undefined;
-        }
+
     }
 
 }

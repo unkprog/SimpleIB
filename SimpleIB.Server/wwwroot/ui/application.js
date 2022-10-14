@@ -93,6 +93,7 @@ export class Application {
     }
     CloseView(view) {
         this.RegViews.Del(view);
+        view.Destroy();
     }
     OpenViewError(err) {
         console.warn(err);

@@ -10,7 +10,7 @@ namespace ui.views {
         Init(opt: IViewParams) {
             super.Init(opt);
 
-            let self = this;
+            var self = this;
 
             (async () => {
 
@@ -22,12 +22,12 @@ namespace ui.views {
         }
 
         DrawWelcome(viewResponse: any) {
-            let self = this;
+            var self = this;
             let listServers = viewResponse.servers;
 
             let html = '';
             for (let i = 0, icount = listServers?.length; i < icount; i++) {
-                html += '<button id="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">laptop_windows</i><span class="caption">' + listServers[i].name + '</span></button>';
+                html += '<button id="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">' + (listServers[i].id > 0 ? 'laptop_windows' : 'add') + '</i><span class="caption">' + listServers[i].name + '</span></button>';
             }
             self._el.querySelector('#listServers').innerHTML = html;
 
@@ -35,7 +35,7 @@ namespace ui.views {
 
             html = '';
             for (let i = 0, icount = listDatabases?.length; i < icount; i++) {
-                html += '<button id="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">storage</i><span class="caption">' + listDatabases[i].name + '</span></button>';
+                html += '<button id="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">' + (listDatabases[i].id > 0 ? 'storage' : 'add') + '</i><span class="caption">' + listDatabases[i].name + '</span></button>';
             }
             self._el.querySelector('#listDatabases').innerHTML = html;
 

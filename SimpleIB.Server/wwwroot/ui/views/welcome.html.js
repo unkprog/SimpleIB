@@ -18,7 +18,7 @@ var ui;
             }
             Init(opt) {
                 super.Init(opt);
-                let self = this;
+                var self = this;
                 (() => __awaiter(this, void 0, void 0, function* () {
                     const contentResponse = yield fetch('/api/admin/welcome').catch(window.app.OpenViewError);
                     const viewResponse = yield contentResponse.json();
@@ -26,17 +26,17 @@ var ui;
                 }))();
             }
             DrawWelcome(viewResponse) {
-                let self = this;
+                var self = this;
                 let listServers = viewResponse.servers;
                 let html = '';
                 for (let i = 0, icount = listServers === null || listServers === void 0 ? void 0 : listServers.length; i < icount; i++) {
-                    html += '<button id="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">laptop_windows</i><span class="caption">' + listServers[i].name + '</span></button>';
+                    html += '<button id="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">' + (listServers[i].id > 0 ? 'laptop_windows' : 'add') + '</i><span class="caption">' + listServers[i].name + '</span></button>';
                 }
                 self._el.querySelector('#listServers').innerHTML = html;
                 let listDatabases = viewResponse.databases;
                 html = '';
                 for (let i = 0, icount = listDatabases === null || listDatabases === void 0 ? void 0 : listDatabases.length; i < icount; i++) {
-                    html += '<button id="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">storage</i><span class="caption">' + listDatabases[i].name + '</span></button>';
+                    html += '<button id="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">' + (listDatabases[i].id > 0 ? 'storage' : 'add') + '</i><span class="caption">' + listDatabases[i].name + '</span></button>';
                 }
                 self._el.querySelector('#listDatabases').innerHTML = html;
                 //let el: HTMLElement =

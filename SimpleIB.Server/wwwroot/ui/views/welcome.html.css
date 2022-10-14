@@ -1,23 +1,40 @@
-﻿.listitems {
-    width: 300px;
-    height: 400px;
-}
-
-.header {
+﻿.header {
     font-size: 20px;
     background-color: var(--p100-color);
     text-align: center;
     margin-bottom: -1px !important;
 }
 
+.listitems {
+    width: 300px;
+    height: 400px;
+    overflow: auto;
+}
+
 .listitems, .header {
     border: 1px solid var(--p400-color);
-    /*border-radius: 3px;*/
-    padding: 0.5rem;
-    margin: 0 3px;
+    padding: var(--def-padding);
+    margin: 0 var(--def-padding);
 }
 
     .listitems > button {
         width: 100%;
-        padding: 4px;
+        padding: var(--def-padding);
+        /*margin-top: var(--def-padding);*/
+        color: var(--secondary-text-color);
+        background-color: transparent;
+        border: none;
     }
+
+        .listitems > button:focus {
+            /*color: var(--text-color);*/
+            border: none;
+        }
+
+        .listitems > button:hover {
+            color: var(--text-color);
+        }
+
+/*    .listitems:first-child > button {
+        margin-top: 0;
+    }*/
