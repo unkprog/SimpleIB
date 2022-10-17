@@ -26,25 +26,53 @@ var ui;
                 }))();
             }
             DrawWelcome(viewResponse) {
+                var _a, _b;
                 var self = this;
                 let listServers = viewResponse.servers;
                 let html = '';
                 for (let i = 0, icount = listServers === null || listServers === void 0 ? void 0 : listServers.length; i < icount; i++) {
-                    html += '<button id="srv-' + listServers[i].id + '" class="button icon"><i class="material-icons">' + (listServers[i].id > 0 ? 'laptop_windows' : 'add') + '</i><span class="caption">' + listServers[i].name + '</span></button>';
+                    html += '<button data-id="' + listServers[i].id + '" class="server-item button icon"><i class="material-icons">' + (listServers[i].id > 0 ? 'laptop_windows' : 'add') + '</i><span class="caption">' + listServers[i].name + '</span></button>';
                 }
-                self._el.querySelector('#listServers').innerHTML = html;
+                let listServersEl = self._el.querySelector('#listServers');
+                listServersEl.innerHTML = html;
+                self._serverItems = listServersEl.querySelectorAll('.server-item');
+                (_a = self._serverItems) === null || _a === void 0 ? void 0 : _a.forEach(item => {
+                    self.BindEvent(item, 'click', self.ClickServerItem);
+                });
                 let listDatabases = viewResponse.databases;
                 html = '';
                 for (let i = 0, icount = listDatabases === null || listDatabases === void 0 ? void 0 : listDatabases.length; i < icount; i++) {
-                    html += '<button id="db-' + listDatabases[i].id + '" class="button icon"><i class="material-icons">' + (listDatabases[i].id > 0 ? 'storage' : 'add') + '</i><span class="caption">' + listDatabases[i].name + '</span></button>';
+                    html += '<button data-id="' + listDatabases[i].id + '" class="database-item button icon"><i class="material-icons">' + (listDatabases[i].id > 0 ? 'storage' : 'add') + '</i><span class="caption">' + listDatabases[i].name + '</span></button>';
                 }
-                self._el.querySelector('#listDatabases').innerHTML = html;
-                //let el: HTMLElement =
-                self._el.querySelector('#listServers').children[0].addEventListener('click', this.ClickFunc);
+                let listDtabasesEl = self._el.querySelector('#listDatabases');
+                listDtabasesEl.innerHTML = html;
+                self._databaseItems = listDtabasesEl.querySelectorAll('.database-item');
+                (_b = self._databaseItems) === null || _b === void 0 ? void 0 : _b.forEach(item => {
+                    item.binderClick = self.BindEvent(item, 'click', self.ClickDatabaseItem);
+                });
             }
-            ClickFunc(e) {
-                window.app.OpenViewModal('modals/viewmodal');
-                //alert('click!!!');
+            ClickServerItem(e) {
+                if (e.currentTarget.dataset.id == 0)
+                    window.app.OpenViewModal('modals/viewmodal');
+                else
+                    alert(e.currentTarget.dataset.id);
+            }
+            ClickDatabaseItem(e) {
+                if (e.currentTarget.dataset.id == 0)
+                    window.app.OpenViewModal('modals/viewmodal');
+                else
+                    alert(e.currentTarget.dataset.id);
+            }
+            DoDestroyEvents() {
+                var _a, _b;
+                super.DoDestroyEvents();
+                let self = this;
+                (_a = self._serverItems) === null || _a === void 0 ? void 0 : _a.forEach(item => {
+                    self.UnbindEvent(item, 'click', item.binderClick);
+                });
+                (_b = self._databaseItems) === null || _b === void 0 ? void 0 : _b.forEach(item => {
+                    self.UnbindEvent(item, 'click', item.binderClick);
+                });
             }
         }
         views.WelcomeView = WelcomeView;
