@@ -53,7 +53,7 @@ namespace ui.views {
 
             self._databaseItems = listDtabasesEl.querySelectorAll('.database-item');
             self._databaseItems?.forEach(item => {
-                item.binderClick = self.BindEvent(item, 'click', self.ClickDatabaseItem);
+                self.BindEvent(item, 'click', self.ClickDatabaseItem);
             });
         }
 
@@ -75,10 +75,10 @@ namespace ui.views {
             super.DoDestroyEvents();
             let self = this;
             self._serverItems?.forEach(item => {
-                self.UnbindEvent(item, 'click', item.binderClick);
+                self.UnbindEvent(item, 'click');
             });
             self._databaseItems?.forEach(item => {
-                self.UnbindEvent(item, 'click', item.binderClick);
+                self.UnbindEvent(item, 'click');
             });
         }
 

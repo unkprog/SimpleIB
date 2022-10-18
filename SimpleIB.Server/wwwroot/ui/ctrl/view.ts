@@ -1,6 +1,7 @@
 ﻿import * as b from "../util/binder.js";
 
 export namespace ui.ctrl {
+
     export class View implements IView {
 
         constructor() {
@@ -53,8 +54,8 @@ export namespace ui.ctrl {
             return b.util.binder.BindEvent(el, eventName, event, this);
         }
 
-        UnbindEvent(el: Element, eventName: string, event: any): any {
-            return b.util.binder.UnbindEvent(el, eventName, event);
+        UnbindEvent(el: Element, eventName: string): any {
+            return b.util.binder.UnbindEvent(el, eventName);
         }
 
         DoInitEvents() {

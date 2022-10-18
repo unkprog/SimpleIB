@@ -35,8 +35,8 @@ export var ui;
             BindEvent(el, eventName, event) {
                 return b.util.binder.BindEvent(el, eventName, event, this);
             }
-            UnbindEvent(el, eventName, event) {
-                return b.util.binder.UnbindEvent(el, eventName, event);
+            UnbindEvent(el, eventName) {
+                return b.util.binder.UnbindEvent(el, eventName);
             }
             DoInitEvents() {
             }

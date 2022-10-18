@@ -32,16 +32,16 @@ export class Application {
         if (this._loader)
             this._loader.style.display = (show === true ? "display" : "none");
     }
-    OpenViewAsync(viewName, toElement) {
+    OpenViewAsync(opt) {
         return __awaiter(this, void 0, void 0, function* () {
             let self = this;
-            let viewEl = toElement;
+            let viewEl = opt.toElement;
             if (!viewEl) {
                 console.error('Не задан #Root элемент!');
                 return;
             }
             (() => __awaiter(this, void 0, void 0, function* () {
-                const viewRequest = { ViewName: viewName };
+                const viewRequest = { ViewName: opt.viewName };
                 const contentResponse = yield fetch('/api/view/open', {
                     cache: "no-cache",
                     method: 'POST',
@@ -54,7 +54,7 @@ export class Application {
                 const viewResponse = yield contentResponse.json();
                 viewEl.innerHTML = viewResponse.html;
                 const viewInitShow = function () {
-                    let constructorView = self.RegViews.Find(viewName);
+                    let constructorView = self.RegViews.Find(opt.viewName);
                     if (constructorView) {
                         let view = constructorView();
                         viewEl.id = 'view_' + self.RegViews.IncCid;
@@ -65,7 +65,7 @@ export class Application {
                 };
                 if (viewResponse.js === true) {
                     var newScript = document.createElement("script");
-                    newScript.src = '/ui/views/' + viewName + '.html.js';
+                    newScript.src = '/ui/views/' + opt.viewName + '.html.js';
                     newScript.type = 'module';
                     newScript.addEventListener('load', viewInitShow);
                     viewEl.appendChild(newScript);
@@ -83,12 +83,12 @@ export class Application {
     }
     OpenView(viewName) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.OpenViewAsync(viewName, this.CreateViewElement('view'));
+            this.OpenViewAsync({ viewName: viewName, toElement: this.CreateViewElement('view') });
         });
     }
     OpenViewModal(viewName) {
         return __awaiter(this, void 0, void 0, function* () {
-            this.OpenViewAsync(viewName, this.CreateViewElement('view-modal'));
+            this.OpenViewAsync({ viewName: viewName, toElement: this.CreateViewElement('view-modal') });
         });
     }
     CloseView(view) {

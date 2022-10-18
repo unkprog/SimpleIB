@@ -37,9 +37,9 @@ export class Application {
             this._loader.style.display = (show === true ? "display" : "none");
     }
 
-    private async OpenViewAsync(viewName: string, toElement: HTMLElement) {
+    private async OpenViewAsync(opt :IOpenViewParams) {
         let self = this;
-        let viewEl: HTMLElement = toElement;
+        let viewEl: HTMLElement = opt.toElement;
 
         if (!viewEl) {
             console.error('Не задан #Root элемент!');
@@ -47,7 +47,7 @@ export class Application {
         }
 
         (async () => {
-            const viewRequest = { ViewName: viewName };
+            const viewRequest = { ViewName: opt.viewName };
             const contentResponse = await fetch('/api/view/open', {
                 cache: "no-cache",
                 method: 'POST',
@@ -62,7 +62,7 @@ export class Application {
             viewEl.innerHTML = viewResponse.html;
 
             const viewInitShow = function () {
-                let constructorView = self.RegViews.Find(viewName);
+                let constructorView = self.RegViews.Find(opt.viewName);
                 if (constructorView) {
                     let view: IView = constructorView();
                     viewEl.id = 'view_' + self.RegViews.IncCid;
@@ -74,7 +74,7 @@ export class Application {
 
             if (viewResponse.js === true) {
                 var newScript = document.createElement("script");
-                newScript.src = '/ui/views/' + viewName + '.html.js';
+                newScript.src = '/ui/views/' + opt.viewName + '.html.js';
                 newScript.type = 'module';
                 newScript.addEventListener('load', viewInitShow);
                 viewEl.appendChild(newScript);
@@ -92,10 +92,11 @@ export class Application {
     }
 
     async OpenView(viewName: string) {
-        this.OpenViewAsync(viewName, this.CreateViewElement('view'));
+        this.OpenViewAsync({ viewName: viewName, toElement: this.CreateViewElement('view') });
     }
+
     async OpenViewModal(viewName: string) {
-        this.OpenViewAsync(viewName, this.CreateViewElement('view-modal'));
+        this.OpenViewAsync({ viewName: viewName, toElement: this.CreateViewElement('view-modal') });
     }
 
     CloseView(view: IView) {

@@ -5,36 +5,43 @@ var ui;
     (function (views) {
         var modals;
         (function (modals) {
+            let EnumViewModalResult;
+            (function (EnumViewModalResult) {
+                EnumViewModalResult[EnumViewModalResult["Close"] = -1] = "Close";
+                EnumViewModalResult[EnumViewModalResult["Ok"] = 0] = "Ok";
+            })(EnumViewModalResult = modals.EnumViewModalResult || (modals.EnumViewModalResult = {}));
             class ViewModal extends ctrl.ui.ctrl.View {
                 constructor() {
                     super();
                 }
                 Init(opt) {
                     super.Init(opt);
+                    this._modalResult = 0;
                 }
                 DoInitEvents() {
                     super.DoInitEvents();
                     let self = this;
-                    self._proxyClickClose = self.BindEvent(self._el.querySelector('#window-modal-button-close'), 'click', self.ClickClose);
-                    //EventListenerOrEventListenerObject
-                    //self._el.querySelector('#window-modal-button-close').addEventListener('click', self._proxyClickClose);
-                    self._proxyClickOk = self.ClickOk.bind(self);
-                    self._el.querySelector('#window-modal-button-ok').addEventListener('click', self._proxyClickOk);
+                    self._btnOk = self._el.querySelector('#window-modal-button-ok');
+                    self._btnClose = self._el.querySelector('#window-modal-button-close');
+                    self.BindEvent(self._btnOk, 'click', self.ClickOk);
+                    self.BindEvent(self._btnClose, 'click', self.ClickClose);
                 }
                 DoDestroyEvents() {
                     super.DoInitEvents();
                     let self = this;
-                    self._el.querySelector('#window-modal-button-ok').removeEventListener('click', self._proxyClickOk);
-                    self._proxyClickOk = undefined;
-                    //self._el.querySelector('#window-modal-button-close').removeEventListener('click', self._proxyClickClose);
-                    //self._proxyClickClose = undefined;
-                    self._proxyClickClose = self.UnbindEvent(self._el.querySelector('#window-modal-button-close'), 'click', self._proxyClickClose);
+                    self.UnbindEvent(self._btnOk, 'click');
+                    self.UnbindEvent(self._btnClose, 'click');
                 }
                 ClickClose(e) {
+                    this._modalResult = EnumViewModalResult.Close;
                     this.Close();
                 }
                 ClickOk(e) {
+                    this._modalResult = EnumViewModalResult.Ok;
                     this.Close();
+                }
+                get ModalResult() {
+                    return this._modalResult;
                 }
             }
             modals.ViewModal = ViewModal;

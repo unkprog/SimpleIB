@@ -48,7 +48,7 @@ var ui;
                 listDtabasesEl.innerHTML = html;
                 self._databaseItems = listDtabasesEl.querySelectorAll('.database-item');
                 (_b = self._databaseItems) === null || _b === void 0 ? void 0 : _b.forEach(item => {
-                    item.binderClick = self.BindEvent(item, 'click', self.ClickDatabaseItem);
+                    self.BindEvent(item, 'click', self.ClickDatabaseItem);
                 });
             }
             ClickServerItem(e) {
@@ -68,10 +68,10 @@ var ui;
                 super.DoDestroyEvents();
                 let self = this;
                 (_a = self._serverItems) === null || _a === void 0 ? void 0 : _a.forEach(item => {
-                    self.UnbindEvent(item, 'click', item.binderClick);
+                    self.UnbindEvent(item, 'click');
                 });
                 (_b = self._databaseItems) === null || _b === void 0 ? void 0 : _b.forEach(item => {
-                    self.UnbindEvent(item, 'click', item.binderClick);
+                    self.UnbindEvent(item, 'click');
                 });
             }
         }
