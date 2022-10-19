@@ -1,4 +1,5 @@
 ﻿import * as ctrl from "../ctrl/view.js";
+import * as tr from "../util/translate.js";
 
 namespace ui.views {
 
@@ -65,7 +66,7 @@ namespace ui.views {
         }
 
         loadServerEdit(view: any) {
-            view.self.Header = 'Добавить сервер';
+            view.self.Header = tr.util.tr.T('$addserver');
             window.app.OpenView({ viewName: 'editors/server', toElement: view.self.Content });
         }
 

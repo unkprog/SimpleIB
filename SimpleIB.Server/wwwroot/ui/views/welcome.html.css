@@ -20,21 +20,15 @@
     .listitems > button {
         width: 100%;
         padding: var(--def-padding);
-        /*margin-top: var(--def-padding);*/
         color: var(--secondary-text-color);
         background-color: transparent;
         border: none;
     }
 
         .listitems > button:focus {
-            /*color: var(--text-color);*/
             border: none;
         }
 
         .listitems > button:hover {
             color: var(--text-color);
         }
-
-/*    .listitems:first-child > button {
-        margin-top: 0;
-    }*/

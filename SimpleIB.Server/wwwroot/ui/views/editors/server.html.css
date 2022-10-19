@@ -1,1 +1,14 @@
-﻿
+﻿.view-server-data {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    justify-items: stretch;
+    align-items: center;
+    grid-template-columns: var(--def-padding) auto auto var(--def-padding);
+    grid-template-rows: var(--def-padding) auto var(--def-padding) auto var(--def-padding) auto var(--def-padding);
+}
+
+.view-server-data-title {
+    margin-right: var(--def-padding);
+}

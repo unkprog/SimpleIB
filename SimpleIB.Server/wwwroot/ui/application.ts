@@ -1,4 +1,5 @@
 ﻿import { AppViews } from "./appviews.js";
+import * as tr from "./util/translate.js";
 
 export class Application {
     constructor() {
@@ -60,6 +61,7 @@ export class Application {
             const viewResponse = await contentResponse.json();
 
             viewEl.innerHTML = viewResponse.html;
+            tr.util.tr.translateView(viewEl);
 
             const viewInitShow = function () {
                 let constructorView = self.RegViews.Find(opt.viewName);
@@ -111,6 +113,8 @@ export class Application {
 
     CloseView(view: IView) {
         this.RegViews.Del(view);
+        const viewEl: HTMLElement = view.Element;
+        viewEl.remove();
         view.Destroy();
     }
 

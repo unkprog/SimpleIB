@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { AppViews } from "./appviews.js";
+import * as tr from "./util/translate.js";
 export class Application {
     constructor() {
         this.RegViews = new AppViews();
@@ -53,6 +54,7 @@ export class Application {
                 }).catch(self.OpenViewError);
                 const viewResponse = yield contentResponse.json();
                 viewEl.innerHTML = viewResponse.html;
+                tr.util.tr.translateView(viewEl);
                 const viewInitShow = function () {
                     let constructorView = self.RegViews.Find(opt.viewName);
                     if (constructorView) {
@@ -101,6 +103,8 @@ export class Application {
     }
     CloseView(view) {
         this.RegViews.Del(view);
+        const viewEl = view.Element;
+        viewEl.remove();
         view.Destroy();
     }
     OpenViewError(err) {

@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import * as ctrl from "../ctrl/view.js";
+import * as tr from "../util/translate.js";
 var ui;
 (function (ui) {
     var views;
@@ -58,7 +59,7 @@ var ui;
                     alert(e.currentTarget.dataset.id);
             }
             loadServerEdit(view) {
-                view.self.Header = 'Добавить сервер';
+                view.self.Header = tr.util.tr.T('$addserver');
                 window.app.OpenView({ viewName: 'editors/server', toElement: view.self.Content });
             }
             ClickDatabaseItem(e) {

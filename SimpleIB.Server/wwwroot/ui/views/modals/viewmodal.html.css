@@ -15,11 +15,12 @@
 }
 
 .buttons-modal {
-   
+    display: grid;
+    justify-items: center;
+    align-items: center;
 }
 
 .button-modal {
-    float: right;
     width: 130px;
     margin: var(--def-padding) var(--def-padding) var(--def-padding) 0;
 }

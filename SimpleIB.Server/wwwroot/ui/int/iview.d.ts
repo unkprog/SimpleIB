@@ -31,7 +31,8 @@ interface IView {
     OnClose: { (e: any): void; };
     OnDestroy: { (e: any): void; };
 
-    Id: string;
+    get Id(): string;
+    get Element(): HTMLElement;
 }
 
 interface IViewModal extends IView {
