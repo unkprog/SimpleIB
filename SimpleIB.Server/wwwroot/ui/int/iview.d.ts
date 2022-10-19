@@ -1,6 +1,11 @@
 ﻿interface IOpenViewParams {
     viewName: string;
-    toElement: HTMLElement;
+    toElement?: HTMLElement;
+
+    onInit?: { (e: any): void; };
+    onShow?: { (e: any): void; };
+    onClose?: { (e: any): void; };
+    onDestroy?: { (e: any): void; };
 }
 
 interface IViewParams {
@@ -21,5 +26,15 @@ interface IView {
     Close();
     Destroy();
 
+    OnInit: { (e: any): void; };
+    OnShow: { (e: any): void; };
+    OnClose: { (e: any): void; };
+    OnDestroy: { (e: any): void; };
+
     Id: string;
+}
+
+interface IViewModal extends IView {
+    set Header(aValue: string);
+    get Content(): HTMLElement;
 }

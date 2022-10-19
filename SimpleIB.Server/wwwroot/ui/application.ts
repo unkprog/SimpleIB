@@ -65,6 +65,12 @@ export class Application {
                 let constructorView = self.RegViews.Find(opt.viewName);
                 if (constructorView) {
                     let view: IView = constructorView();
+
+                    view.OnInit = opt.onInit;
+                    view.OnShow = opt.onShow;
+                    view.OnClose = opt.onClose;
+                    view.OnDestroy = opt.onDestroy;
+
                     viewEl.id = 'view_' + self.RegViews.IncCid;
                     view.Init({ id: viewEl.id, el: viewEl });
                     self.RegViews.Add(view);
@@ -91,12 +97,16 @@ export class Application {
         return result;
     }
 
-    async OpenView(viewName: string) {
-        this.OpenViewAsync({ viewName: viewName, toElement: this.CreateViewElement('view') });
+    async OpenView(opt: IOpenViewParams ) {
+        if (!opt.toElement)
+            opt.toElement = this.CreateViewElement('view');
+        this.OpenViewAsync(opt);
     }
 
-    async OpenViewModal(viewName: string) {
-        this.OpenViewAsync({ viewName: viewName, toElement: this.CreateViewElement('view-modal') });
+    async OpenViewModal(opt: IOpenViewParams) {
+        if (!opt.toElement)
+            opt.toElement = this.CreateViewElement('view-modal');
+        this.OpenViewAsync(opt);
     }
 
     CloseView(view: IView) {
@@ -113,7 +123,7 @@ export class Application {
     }
 
     Welcome() {
-        this.OpenView('welcome');
+        this.OpenView({ viewName: 'welcome' });
     }
 
 }

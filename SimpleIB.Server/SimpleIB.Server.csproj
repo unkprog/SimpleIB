@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\ui\ctrl\viewmodal.html" />
+    <Content Remove="wwwroot\ui\views\editors\server.html" />
     <Content Remove="wwwroot\ui\views\main.html" />
     <Content Remove="wwwroot\ui\views\welcome.html" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\ui\views\editors\server.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="wwwroot\ui\views\modals\viewmodal.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -58,6 +62,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\ui\util\binder.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\ui\views\editors\server.html.css">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\ui\views\modals\viewmodal.html.css">

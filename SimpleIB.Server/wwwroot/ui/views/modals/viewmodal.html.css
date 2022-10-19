@@ -1,7 +1,4 @@
-﻿:root {
-}
-
-.window-modal {
+﻿.window-modal {
     border: 1px solid var(--p900-color);
     background-color: var(--p000-color);
 }

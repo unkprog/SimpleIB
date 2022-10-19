@@ -53,13 +53,17 @@ var ui;
             }
             ClickServerItem(e) {
                 if (e.currentTarget.dataset.id == 0)
-                    window.app.OpenViewModal('modals/viewmodal');
+                    window.app.OpenViewModal({ viewName: 'modals/viewmodal', onInit: this.loadServerEdit });
                 else
                     alert(e.currentTarget.dataset.id);
             }
+            loadServerEdit(view) {
+                view.self.Header = 'Добавить сервер';
+                window.app.OpenView({ viewName: 'editors/server', toElement: view.self.Content });
+            }
             ClickDatabaseItem(e) {
                 if (e.currentTarget.dataset.id == 0)
-                    window.app.OpenViewModal('modals/viewmodal');
+                    window.app.OpenViewModal({ viewName: 'modals/viewmodal' });
                 else
                     alert(e.currentTarget.dataset.id);
             }
