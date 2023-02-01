@@ -28,6 +28,8 @@ export var ui;
                     this._el = this._opt.el;
                 else if (this._opt.id)
                     this._el = document.getElementById(this._opt.id);
+                if (this._el)
+                    this._el.style.display = 'none';
                 this.DoInit();
                 this.DoInitEvents();
                 if (this.OnInit)

@@ -67,7 +67,7 @@ export class Application {
                 let constructorView = self.RegViews.Find(opt.viewName);
                 if (constructorView) {
                     let view: IView = constructorView();
-
+                    
                     view.OnInit = opt.onInit;
                     view.OnShow = opt.onShow;
                     view.OnClose = opt.onClose;
@@ -76,7 +76,8 @@ export class Application {
                     viewEl.id = 'view_' + self.RegViews.IncCid;
                     view.Init({ id: viewEl.id, el: viewEl });
                     self.RegViews.Add(view);
-                    view.Show();
+                    if (opt.isShow == undefined || opt.isShow === true)
+                        view.Show();
                 }
             }
 
@@ -95,6 +96,7 @@ export class Application {
     private CreateViewElement(className: string): HTMLElement {
         let result: HTMLElement = document.createElement("div");
         result.className = className;
+        result.style.display = "none";
         this._app.appendChild(result);
         return result;
     }

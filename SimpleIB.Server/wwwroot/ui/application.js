@@ -66,7 +66,8 @@ export class Application {
                         viewEl.id = 'view_' + self.RegViews.IncCid;
                         view.Init({ id: viewEl.id, el: viewEl });
                         self.RegViews.Add(view);
-                        view.Show();
+                        if (opt.isShow == undefined || opt.isShow === true)
+                            view.Show();
                     }
                 };
                 if (viewResponse.js === true) {
@@ -84,6 +85,7 @@ export class Application {
     CreateViewElement(className) {
         let result = document.createElement("div");
         result.className = className;
+        result.style.display = "none";
         this._app.appendChild(result);
         return result;
     }

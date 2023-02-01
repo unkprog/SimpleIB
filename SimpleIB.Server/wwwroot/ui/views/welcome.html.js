@@ -53,14 +53,17 @@ var ui;
                 });
             }
             ClickServerItem(e) {
-                if (e.currentTarget.dataset.id == 0)
-                    window.app.OpenViewModal({ viewName: 'modals/viewmodal', onInit: this.loadServerEdit });
+                if (e.currentTarget.dataset.id == 0) {
+                    const opt = { viewName: 'modals/viewmodal', isShow: false, onInit: this.loadServerEdit };
+                    window.app.OpenViewModal(opt);
+                }
                 else
                     alert(e.currentTarget.dataset.id);
             }
             loadServerEdit(view) {
-                view.self.Header = tr.util.tr.T('$addserver');
-                window.app.OpenView({ viewName: 'editors/server', toElement: view.self.Content });
+                const modal = view.self;
+                modal.Header = tr.util.tr.T('$addserver');
+                window.app.OpenView({ viewName: 'editors/server', toElement: view.self.Content, onInit: (view) => { modal.Show(); } });
             }
             ClickDatabaseItem(e) {
                 if (e.currentTarget.dataset.id == 0)

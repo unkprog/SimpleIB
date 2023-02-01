@@ -2,6 +2,7 @@
     viewName: string;
     toElement?: HTMLElement;
 
+    isShow?: boolean;
     onInit?: { (e: any): void; };
     onShow?: { (e: any): void; };
     onClose?: { (e: any): void; };
