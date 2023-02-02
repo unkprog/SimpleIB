@@ -10,6 +10,14 @@ namespace ui.views {
 
         Init(opt: IViewParams) {
             super.Init(opt);
+            this.LoadWelcomeData();
+        }
+
+
+        private _serverItems: any;
+        private _databaseItems: any;
+
+        LoadWelcomeData() {
 
             var self = this;
 
@@ -17,16 +25,12 @@ namespace ui.views {
 
                 const contentResponse = await fetch('/api/admin/welcome').catch(window.app.OpenViewError);
                 const viewResponse = await contentResponse.json();
-                self.DrawWelcome(viewResponse);
-               
+                self.DrawWelcomeData(viewResponse);
+
             })();
         }
 
-
-        private _serverItems: any;
-        private _databaseItems: any;
-
-        DrawWelcome(viewResponse: any) {
+        DrawWelcomeData(viewResponse: any) {
             var self = this;
             let listServers = viewResponse.servers;
 
@@ -60,7 +64,7 @@ namespace ui.views {
 
         ClickServerItem(e: any) {
             if (e.currentTarget.dataset.id == 0) {
-                const opt = { viewName: 'modals/viewmodal', isShow: false, onInit: this.loadServerEdit };
+                const opt = { viewName: 'modals/viewmodal', isShow: false, onInit: this.loadServerEdit, onClose: (view: any) => { this.LoadWelcomeData(); } };
                 window.app.OpenViewModal(opt);
             }
             else

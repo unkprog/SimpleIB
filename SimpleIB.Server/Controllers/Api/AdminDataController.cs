@@ -10,23 +10,29 @@ namespace SimpleIB.Server.Controllers.Api
         public static void ApiRegister(WebApplication app)
         {
             logger = app.Services.GetRequiredService<ILogger<AdminDataController>>();
-
         }
 
         public static void Init()
         {
-            logger.LogInformation("Start init admin infobase...");
+            logger?.LogInformation("Start init admin infobase...");
             //create table if not exists server (name text, ip text, port integer);
             using (SqliteConnection connection = new SqliteConnection($"Data Source={_adminDatasource}"))
             {
-                string servers = "create table if not exists server (name text, ip text, port integer);";
-                using (SqliteCommand command = new SqliteCommand(servers, connection))
+                string cmdText = "create table if not exists server (name text, ip text, port integer);";
+                using (SqliteCommand command = new SqliteCommand(cmdText, connection))
+                {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+
+                cmdText = "create table if not exists database (name text);";
+                using (SqliteCommand command = new SqliteCommand(cmdText, connection))
                 {
                     connection.Open();
                     command.ExecuteNonQuery();
                 }
             }
-            logger.LogInformation("End init admin infobase...");
+            logger?.LogInformation("End init admin infobase...");
         }
     }
 }

@@ -29,6 +29,7 @@
     transition-duration: 0.4s;
     border: 1px solid var(--p900-color);
     min-height: 24px;
+    border-radius: 16px;
 }
 
     .button:hover {
